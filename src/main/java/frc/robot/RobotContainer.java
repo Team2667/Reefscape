@@ -22,15 +22,17 @@ public class RobotContainer {
   
   public RobotContainer() {
     // Initialize manipulatorController using manipulator gamepad Port constant
+    manipulatorController = new XboxController(manipulatorGamepadPort);
     initializeElevator(manipulatorController);
   }
 
   private void initializeElevator(XboxController controller){
-    if (elevatorAvailable== true){
-     // initializeElevator(elevator);
-      
-      
-      
+    if (elevatorAvailable== true){      
+       elevator = new Elevator();
+
+      Command elevatorC = new ElevatorDefaultCommand(elevator, controller);
+      elevator.setDefaultCommand(elevatorC);
+  
     }
     // if the elevatorAvailable constant is set to true do the following
     // Initialize elevator.
