@@ -22,7 +22,7 @@ public class Constants {
         public static final double dV = 0;
     }
 
-    public static class ArmVals {
+    public static class ClimberVals {
 
     }
 
