@@ -9,14 +9,26 @@ public class ElevatorDefaultCommand  extends Command{
     private Elevator elevator;
 
     public ElevatorDefaultCommand(Elevator elevator, XboxController controller ) {
-        // intialize this.controller and this.elevator
-        // add elevator as a requirement for this command
+        this.controller = controller;
+        this.elevator = elevator;
+        addRequirements(elevator);
     }
 
     @Override
     public void execute() {
-        // If the up arrow on the dpad is pressed, go up.
-        // If the down arrow on the dpad is pressed, go down.
-        // See https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj/GenericHID.html#getPOV()
-    }
+        if(controller.getPOV()== 0){
+            elevator.moveUp();
+        }
+        else if(controller.getPOV()== 180) {
+            elevator.moveDown();
+        }
+        else {
+            elevator.stop();
+        }
+    
+    }   
+public void end(boolean isInturupted) {
+    elevator.stop();
+}
+
 }

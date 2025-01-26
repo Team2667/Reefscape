@@ -18,34 +18,28 @@ public class Elevator extends SubsystemBase{
     private SparkMax leaderMotor;
 
     public Elevator() {
+        leaderMotor = new SparkMax(leaderCANId, MotorType.kBrushless);
+        followerMotor = new SparkMax(followerCANId, MotorType.kBrushless);
 
-        // Initialize motors. See https://github.com/Team2667/Crescendo-Imported/blob/master/src/main/java/frc/robot/subsystems/Intake.java#L22
+        SparkBaseConfig leaderConfig = new SparkMaxConfig();
+        leaderConfig.closedLoop.pid(pV, iV, dV);
 
-
-        // Setup a SparkBaseConfig object for follower
-        //  - Follow leader motor
-        //  - Inverted
-        // configure followerMotor
-
-
-        // Setup a SparkBaseConfig object for leaderMotor:
-        //  - Set closedLoop pid values to those in Constants.
-        //  - Once we add limit switches, we'll need to configure them. This will be done later.
-
+        SparkBaseConfig followerConfig = new SparkMaxConfig();
+        followerConfig.follow(leaderCANId);
+        followerConfig.inverted(true);
+        followerMotor.configure(followerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
     public void moveUp(){
-        // call the set api on leaderMotor to move the motor in an upward direction
+        leaderMotor.set(0.25);
     }
 
     public void moveDown(){
-        // call the set api on leaderMotor to moce the motor in a downward direction.
+        leaderMotor.set(-0.25);
     }
 
     public void stop(){
-        
-        // call method on the leaderMotor to stop the motor.
-    
+        leaderMotor.stopMotor();
     }
 
     @Override

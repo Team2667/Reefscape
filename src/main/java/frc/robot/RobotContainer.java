@@ -7,10 +7,13 @@ package frc.robot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.commands.ElevatorDefaultCommand;
 import frc.robot.subsystems.Elevator;
 
 import static frc.robot.Constants.AvailableSubsystems.*;
 import static frc.robot.Constants.GameControllerConstants.*;
+
+import java.security.cert.CertStoreException;
 
 public class RobotContainer {
   private Elevator elevator;
@@ -23,6 +26,12 @@ public class RobotContainer {
   }
 
   private void initializeElevator(XboxController controller){
+    if (elevatorAvailable== true){
+      initializeElevator(elevator);
+      
+      
+      
+    }
     // if the elevatorAvailable constant is set to true do the following
     // Initialize elevator.
     // Create an ElevatorDefaultCommand and make it the default command for the elevator subsystem.
