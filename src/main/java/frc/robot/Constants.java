@@ -24,9 +24,12 @@ public class Constants {
 
     public static class ClimberVals {
 
+
     }
 
     public static class ClawVals {
-
+        public static int canId = 20;
+        public static double pullInSpeed = .25;
+        public static double throwSpeed = .25;
     }    
 }
