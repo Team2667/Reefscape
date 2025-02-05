@@ -23,19 +23,20 @@ public class Elevator extends SubsystemBase{
 
         SparkBaseConfig leaderConfig = new SparkMaxConfig();
         leaderConfig.closedLoop.pid(pV, iV, dV);
+        
 
         SparkBaseConfig followerConfig = new SparkMaxConfig();
-        followerConfig.follow(leaderCANId);
-        followerConfig.inverted(true);
+        followerConfig.follow(leaderCANId, true);
+      //  followerConfig.inverted(true);
         followerMotor.configure(followerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
     public void moveUp(){
-        leaderMotor.set(0.25);
+        leaderMotor.set(-0.15);
     }
 
     public void moveDown(){
-        leaderMotor.set(-0.25);
+        leaderMotor.set(0.15);
     }
 
     public void stop(){

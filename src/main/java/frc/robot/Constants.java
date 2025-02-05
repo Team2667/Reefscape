@@ -15,8 +15,8 @@ public class Constants {
     }
 
     public static class ElevatorVals {
-        public static final int leaderCANId = 10;
-        public static final int followerCANId = 11;
+        public static final int leaderCANId = 11;
+        public static final int followerCANId = 10;
         public static final double pV = 0.0008;
         public static final double iV = 0.0;
         public static final double dV = 0;
