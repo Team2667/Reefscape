@@ -11,6 +11,7 @@ import com.revrobotics.spark.config.LimitSwitchConfig.Type;
 
 import static frc.robot.Constants.ElevatorVals.*;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Elevator extends SubsystemBase{
@@ -45,6 +46,6 @@ public class Elevator extends SubsystemBase{
 
     @Override
     public void periodic(){
-        leaderMotor.getEncoder().getPosition();
+        SmartDashboard.putNumber("Elevator Position",  leaderMotor.getEncoder().getPosition());
     }
 }
