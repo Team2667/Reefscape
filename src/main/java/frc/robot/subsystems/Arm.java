@@ -16,14 +16,10 @@ public class Arm extends SubsystemBase {
 
     public Arm() {
         // create a new SparkFlex object and assign it to armMotor
-        armMotor = new SparkFlex(canId,MotorType.kBrushless);
 
         // create a SparkFlexConfig object.
         // In the closedLoop a feedbackSendor property. This needs to be set to a FeedbackSensor.kAlternatOrExternalEncoder enum value. 
         // 
-        SparkFlexConfig config = new SparkFlexConfig();
-        config.closedLoop.feedbackSensor(FeedbackSensor.kAlternateOrExternalEncoder);
-        armMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
     public void rotateClockwise(){
