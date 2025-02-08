@@ -1,5 +1,8 @@
 package frc.robot.subsystems;
 
+import com.revrobotics.spark.SparkBase.ControlType;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkFlexConfig;
@@ -20,6 +23,24 @@ public class Arm extends SubsystemBase {
         // 
         SparkFlexConfig config = new SparkFlexConfig();
         config.closedLoop.feedbackSensor(FeedbackSensor.kAlternateOrExternalEncoder);
+        armMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
+    public void rotateClockwise(){
+
+    }
+
+    public void rotateCounterClockwise(){
+        
+    }
+
+    public void toProcessorPosition(){
+        // On the armMotor, there is something called a closed loop controller. Get that and then 
+        // call set reference.
+    }
+
+    @Override
+    public void periodic(){
+        // use smart dashboard to write the position of the arm 
+    }
 }

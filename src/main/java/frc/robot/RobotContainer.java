@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.ElevatorDefaultCommand;
 import frc.robot.commands.PickAlgae;
 import frc.robot.commands.ThrowAlgae;
+import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Elevator;
 
@@ -20,6 +21,7 @@ import static frc.robot.Constants.GameControllerConstants.*;
 public class RobotContainer {
   private Elevator elevator;
   private Claw claw;
+  private Arm arm;
   private CommandXboxController driveTrainController;
   private CommandXboxController manipulatorController;
   
@@ -48,7 +50,12 @@ public class RobotContainer {
       Command clawThrow = new ThrowAlgae(claw);
       controller.rightBumper().whileTrue(clawThrow);
       }
-    }
+  }
+
+  private void initializeArm() {
+    // If Arm is available initialize the arm subsystem
+    // and create a ArmDefaultCommand
+  }
 
   public Command getAutonomousCommand() {
     return Commands.print("No autonomous command configured");
