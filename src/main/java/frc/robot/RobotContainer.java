@@ -47,19 +47,8 @@ public class RobotContainer {
       controller.leftBumper().whileTrue(clawIntake);
       Command clawThrow = new ThrowAlgae(claw);
       controller.rightBumper().whileTrue(clawThrow);
-    
-
-
-      }  
-      // TODO: 
-      // Create PickAlgae command
-      // Create Throw Algae command
-      // Bind PickAlgae command to a button that makes using whileTrue
-      // Bind ThrowAlgae command to a button that makes sense using whileTrue
-      // See: https://github.com/Team2667/Crescendo/blob/master/src/main/java/frc/robot/RobotContainer.java#L158
-      
-    
-  }
+      }
+    }
 
   public Command getAutonomousCommand() {
     return Commands.print("No autonomous command configured");
