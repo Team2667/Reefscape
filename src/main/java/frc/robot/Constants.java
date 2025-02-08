@@ -5,7 +5,7 @@ public class Constants {
     public static class AvailableSubsystems {
         public static boolean elevatorAvailable = true;
         public static boolean armAvailavble = false;
-        public static boolean clawAvailavle = false;
+        public static boolean clawAvailable = true;
         public static boolean driveTrainAvailable = false;
     }
 
@@ -24,9 +24,12 @@ public class Constants {
 
     public static class ClimberVals {
 
+
     }
 
     public static class ClawVals {
-
+        public static int canId = 20;
+        public static double pullInSpeed = .25;
+        public static double throwSpeed = .25;
     }    
 }
