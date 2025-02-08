@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.commands.ArmDefaultCommand;
 import frc.robot.commands.ElevatorDefaultCommand;
 import frc.robot.commands.PickAlgae;
 import frc.robot.commands.ThrowAlgae;
@@ -30,6 +31,7 @@ public class RobotContainer {
     manipulatorController = new CommandXboxController(manipulatorGamepadPort);
     initializeElevator(manipulatorController);
     initializeClaw(manipulatorController);
+    initializeArm(manipulatorController);
   }
 
   private void initializeElevator(CommandXboxController controller){
@@ -52,8 +54,12 @@ public class RobotContainer {
       }
   }
 
-  private void initializeArm() {
-    // If Arm is available initialize the arm subsystem
+  private void initializeArm(CommandXboxController controller) {
+    if (armAvailavble == true) {
+      arm = new Arm();
+      Command armOut = new ArmDefaultCommand(arm, controller.getHID());
+      arm.setDefaultCommand(armOut);
+    }
     // and create a ArmDefaultCommand
   }
 

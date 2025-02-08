@@ -4,7 +4,7 @@ public class Constants {
 
     public static class AvailableSubsystems {
         public static boolean elevatorAvailable = true;
-        public static boolean armAvailavble = false;
+        public static boolean armAvailavble = true;
         public static boolean clawAvailable = true;
         public static boolean driveTrainAvailable = false;
     }
