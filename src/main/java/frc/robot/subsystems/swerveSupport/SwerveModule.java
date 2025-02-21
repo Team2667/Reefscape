@@ -17,6 +17,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.Constants;
+import static frc.robot.Constants.DriveTrainVals.*;
 
 public class SwerveModule {
 
@@ -114,7 +115,7 @@ public class SwerveModule {
     }
 
     private void setDriveVelocity(double metersPerSecond) {
-        var voltage = (metersPerSecond / Constants.MAX_INPUT_SPEED * MAX_VOLTAGE) * (Constants.PERCENTAGE_MAX_SPEED / 100);
+        var voltage = (metersPerSecond / MAX_INPUT_SPEED * MAX_VOLTAGE) * (PERCENTAGE_MAX_SPEED / 100);
         SmartDashboard.putNumber(getVelocityLabel("Voltage"), voltage);
         driveMotor.setVoltage(voltage);
      }

@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonUtils;
+import static frc.robot.Constants.PoseEstimatorVals.*;
 
 import java.lang.Math;
 
@@ -45,7 +46,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     @Override
     public void periodic(){
        updatePoseEstimator();
-       if (Constants.debuggymodey){
+       if (writeDebugVals){
         displayCurrentPosition();
        }
     }
@@ -91,13 +92,13 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
                 aprilTagFieldLayout.getTagPose(target.getFiducialId()).ifPresent(
                     targetPos -> {
                         Transform3d camToTarget = target.getBestCameraToTarget();
-                        if(Constants.debuggymodey){
+                        if(writeDebugVals){
                             SmartDashboard.putNumber("cam-to-target-transform-x", camToTarget.getX());
                             SmartDashboard.putNumber("cam-to-target-transform-y", camToTarget.getY());
                             SmartDashboard.putNumber("cam-to-target-transform-z", camToTarget.getZ());
                         }
                         Pose3d camPose = targetPos.transformBy(camToTarget.inverse());
-                        if(Constants.debuggymodey){
+                        if(writeDebugVals){
                             SmartDashboard.putNumber("camPose-x", camPose.getX());
                             SmartDashboard.putNumber("camPose-y", camPose.getY());
                             SmartDashboard.putNumber("camPose-z", camPose.getZ());
@@ -107,7 +108,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
                         //FIGGER OUT HOW TO GET THE 3D ROTATION
                         var visionMeasurement = camPose.transformBy(cameraToRobot);
                         var visionPos = visionMeasurement.toPose2d();
-                        if(Constants.debuggymodey) {
+                        if(writeDebugVals) {
                             SmartDashboard.putNumber("Vision X", visionPos.getX());
                             SmartDashboard.putNumber("Vision Y", visionPos.getY());
                             SmartDashboard.putNumber("Vision rotation", visionPos.getRotation().getDegrees());
