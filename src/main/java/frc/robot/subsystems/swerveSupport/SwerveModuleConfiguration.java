@@ -31,10 +31,10 @@ public class SwerveModuleConfiguration {
 
     public static SwerveModuleConfiguration frontRightConfig() {
         var moduleConfig = new SwerveModuleConfiguration();
-        moduleConfig.steerMotorCanId = FRONT_LEFT_MODULE_STEER_MOTOR;
-        moduleConfig.steerAbsoluteEncoderCanId = FRONT_LEFT_MODULE_STEER_ENCODER;
-        moduleConfig.steeringOffsetInRadians = FRONT_LEFT_MODULE_STEER_OFFSET;
-        moduleConfig.driveMotorCanId = FRONT_LEFT_MODULE_DRIVE_MOTOR;
+        moduleConfig.steerMotorCanId = flSteerMotorCANId;
+        moduleConfig.steerAbsoluteEncoderCanId = flSteerEncoderCANId;
+        moduleConfig.steeringOffsetInRadians = flSteerEncoderOffset;
+        moduleConfig.driveMotorCanId = flDriveMotorCANId;
         moduleConfig.revolutionsPerMeter = WHEEL_REVOLUTIONS_PER_METER;
         moduleConfig.label = "Front Left";
 
@@ -43,10 +43,10 @@ public class SwerveModuleConfiguration {
 
     public static SwerveModuleConfiguration frontLeftConfig() {
         var moduleConfig = new SwerveModuleConfiguration();
-        moduleConfig.steerMotorCanId = FRONT_RIGHT_MODULE_STEER_MOTOR;
-        moduleConfig.steerAbsoluteEncoderCanId = FRONT_RIGHT_MODULE_STEER_ENCODER;
-        moduleConfig.steeringOffsetInRadians = FRONT_RIGHT_MODULE_STEER_OFFSET;
-        moduleConfig.driveMotorCanId = FRONT_RIGHT_MODULE_DRIVE_MOTOR;
+        moduleConfig.steerMotorCanId = frSteerMotorCANId;
+        moduleConfig.steerAbsoluteEncoderCanId = frSteerEncoderCANId;
+        moduleConfig.steeringOffsetInRadians = frSteerEncoderOffset;
+        moduleConfig.driveMotorCanId = frDriveMotorCANId;
         moduleConfig.revolutionsPerMeter = WHEEL_REVOLUTIONS_PER_METER;
         moduleConfig.label = "Front Right";
 
@@ -55,10 +55,10 @@ public class SwerveModuleConfiguration {
 
     public static SwerveModuleConfiguration backRightConfig() {
         var moduleConfig = new SwerveModuleConfiguration();
-        moduleConfig.steerMotorCanId = BACK_RIGHT_MODULE_STEER_MOTOR;
-        moduleConfig.steerAbsoluteEncoderCanId = BACK_RIGHT_MODULE_STEER_ENCODER;
-        moduleConfig.steeringOffsetInRadians = BACK_RIGHT_MODULE_STEER_OFFSET;
-        moduleConfig.driveMotorCanId = BACK_RIGHT_MODULE_DRIVE_MOTOR;
+        moduleConfig.steerMotorCanId = brSteerMotorCANId;
+        moduleConfig.steerAbsoluteEncoderCanId = brSteerEncoderCANId;
+        moduleConfig.steeringOffsetInRadians = brSteerEncoderOffset;
+        moduleConfig.driveMotorCanId = brDriveMotorCANId;
         moduleConfig.revolutionsPerMeter = WHEEL_REVOLUTIONS_PER_METER;
         moduleConfig.label = "Back Right";
         return moduleConfig;
@@ -66,10 +66,10 @@ public class SwerveModuleConfiguration {
 
     public static SwerveModuleConfiguration backLeftConfig() {
         var moduleConfig = new SwerveModuleConfiguration();
-        moduleConfig.steerMotorCanId = BACK_LEFT_MODULE_STEER_MOTOR;
-        moduleConfig.steerAbsoluteEncoderCanId = BACK_LEFT_MODULE_STEER_ENCODER;
-        moduleConfig.steeringOffsetInRadians = BACK_LEFT_MODULE_STEER_OFFSET;
-        moduleConfig.driveMotorCanId = BACK_LEFT_MODULE_DRIVE_MOTOR;
+        moduleConfig.steerMotorCanId = blSteerMotorCANId;
+        moduleConfig.steerAbsoluteEncoderCanId = blSteerEncoderCANId;
+        moduleConfig.steeringOffsetInRadians = blSteerEncoderOffset;
+        moduleConfig.driveMotorCanId = blDriveMotorCANId;
         moduleConfig.revolutionsPerMeter = WHEEL_REVOLUTIONS_PER_METER;
         moduleConfig.label = "Back Left";
 

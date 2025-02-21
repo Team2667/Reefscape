@@ -4,34 +4,45 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.estimator.PoseEstimator;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.ArmDefaultCommand;
+import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.ElevatorDefaultCommand;
 import frc.robot.commands.PickAlgae;
 import frc.robot.commands.ThrowAlgae;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
+import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.PoseEstimatorSubsystem;
 
 import static frc.robot.Constants.AvailableSubsystems.*;
 import static frc.robot.Constants.GameControllerConstants.*;
+
+import org.photonvision.PhotonCamera;
 
 public class RobotContainer {
   private Elevator elevator;
   private Claw claw;
   private Arm arm;
+  private DriveTrain driveTrain;
+  private PoseEstimatorSubsystem poseEstimator;
   private CommandXboxController driveTrainController;
   private CommandXboxController manipulatorController;
   
   public RobotContainer() {
     // Initialize manipulatorController using manipulator gamepad Port constant
     manipulatorController = new CommandXboxController(manipulatorGamepadPort);
+    driveTrainController = new CommandXboxController(driveTrainGamepadPort);
+    initializeDriveTrain(driveTrainController);
     initializeElevator(manipulatorController);
     initializeClaw(manipulatorController);
     initializeArm(manipulatorController);
+    initializePoseEstimator(driveTrain);
   }
 
   private void initializeElevator(CommandXboxController controller){
@@ -63,7 +74,42 @@ public class RobotContainer {
     // and create a ArmDefaultCommand
   }
 
+  private void initializeDriveTrain(CommandXboxController controller) {
+    if (driveTrainAvailable) {
+      driveTrain = new DriveTrain();
+      driveTrain.setDefaultCommand(new DefaultDriveCommand(driveTrain,
+          () -> -modifyAxis(controller.getHID().getLeftY()),
+          () -> -modifyAxis(controller.getHID().getLeftX()),
+          () -> modifyAxis(controller.getHID().getRightX())));
+    }
+  }
+
+  private void initializePoseEstimator(DriveTrain driveTrain) {
+    if (poseEstimatorAvailable && driveTrainAvailable) {
+       var photonCamera = new PhotonCamera("USB_webcam");
+      poseEstimator = new PoseEstimatorSubsystem(photonCamera, driveTrain);
+    }
+  }
+
   public Command getAutonomousCommand() {
     return Commands.print("No autonomous command configured");
+  }
+
+  private double modifyAxis(double input) {
+    input = deadband(input, 0.05);
+    // Square the axis
+    return Math.copySign(input * input, input);
+  }
+
+  private static double deadband(double value, double deadband) {
+    if (Math.abs(value) > deadband) {
+      if (value > 0.0) {
+        return (value - deadband) / (1.0 - deadband);
+      } else {
+        return (value + deadband) / (1.0 - deadband);
+      }
+    } else {
+      return 0.0;
+    }
   }
 }
