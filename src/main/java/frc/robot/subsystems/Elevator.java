@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.revrobotics.spark.SparkBase;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
@@ -17,6 +18,22 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Elevator extends SubsystemBase{
     private SparkMax followerMotor;
     private SparkMax leaderMotor;
+    private double marginOfError = 5.0;
+
+    public enum ElevatorPosition {
+        // TODO: We will need to determine which elevator positions we need
+        // and there exact values.
+        LowerRefPosition(5.1),
+        MiddleRefPosition(10.3),
+        TopRefPosition(15.6);
+
+
+        ElevatorPosition(double position){
+            this.position = position;
+        }
+
+        public double position;
+    }
 
     public Elevator() {
         leaderMotor = new SparkMax(leaderCANId, MotorType.kBrushless);
@@ -28,8 +45,21 @@ public class Elevator extends SubsystemBase{
 
         SparkBaseConfig followerConfig = new SparkMaxConfig();
         followerConfig.follow(leaderCANId, true);
-      //  followerConfig.inverted(true);
         followerMotor.configure(followerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    }
+
+    public void moveToPosition(ElevatorPosition targetPosition) {
+        // TODO: Get the closed loop controller of the leader motoer and set the reference to 
+        // the specified position.
+        // HINT: targetPosition is an enumeration type. You can access the position value with the
+        // position method.
+    }
+
+    public boolean isAtPosition(ElevatorPosition targetPosition) {
+      //  TODO: Get the current position using the encoder of the leader motor and return true if it is within
+      //  + marginOfError or - marginOfError of the targetPosition.
+      
+      return false;
     }
 
     public void moveUp(){

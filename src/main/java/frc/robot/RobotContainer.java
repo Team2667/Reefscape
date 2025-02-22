@@ -51,7 +51,8 @@ public class RobotContainer {
 
       Command elevatorC = new ElevatorDefaultCommand(elevator, controller.getHID());
       elevator.setDefaultCommand(elevatorC);
-  
+
+      // TODO: Create an ElevatorMoveToPosition command and bind it to the 'a' button on the controller.
     }
   }
 
