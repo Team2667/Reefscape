@@ -23,9 +23,9 @@ public class Elevator extends SubsystemBase{
     public enum ElevatorPosition {
         // TODO: We will need to determine which elevator positions we need
         // and there exact values.
-        LowerRefPosition(5.1),
-        MiddleRefPosition(10.3),
-        TopRefPosition(15.6);
+        LowerRefPosition(-5.1),
+        MiddleRefPosition(-10.3),
+        TopRefPosition(-15.6);
 
 
         ElevatorPosition(double position){
@@ -49,17 +49,16 @@ public class Elevator extends SubsystemBase{
     }
 
     public void moveToPosition(ElevatorPosition targetPosition) {
-        // TODO: Get the closed loop controller of the leader motoer and set the reference to 
-        // the specified position.
-        // HINT: targetPosition is an enumeration type. You can access the position value with the
-        // position method.
+        leaderMotor.getClosedLoopController().setReference(targetPosition.position, ControlType.kPosition);
     }
 
     public boolean isAtPosition(ElevatorPosition targetPosition) {
-      //  TODO: Get the current position using the encoder of the leader motor and return true if it is within
-      //  + marginOfError or - marginOfError of the targetPosition.
-      
-      return false;
+        if (leaderMotor.getEncoder().getPosition() == marginOfError) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     public void moveUp(){

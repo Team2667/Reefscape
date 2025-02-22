@@ -9,18 +9,18 @@ public class ElevatorMoveToPosition extends Command{
     private ElevatorPosition targetPosition;
     
     public ElevatorMoveToPosition(Elevator elevator, ElevatorPosition targetPosition) {
-        // TODO: Initialize the class member values
-        // TODO: Add elevator as a requirement for this command
+        this.elevator = elevator;
+        this.targetPosition = targetPosition;
+        addRequirements(elevator);
     }
-
-    // TODO: Add an initialize method that moves the elevator to targetPosition
-    // See PickAlgae for an example.
-
-    // TODO: isFinished should return true if the elevator is at the target position.
+    public void initialize(Elevator elevator, ElevatorPosition targetPosition) {
+        elevator.moveToPosition(targetPosition);
+    }
     @Override
     public boolean isFinished() {
-        return false;
+        return elevator.isAtPosition(targetPosition);
     }
-
-    // TODO: implement the End method. See PickAlgae for an example.
+    public void end(Elevator elevator) {
+        elevator.stop();
+    }
 }

@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.ArmDefaultCommand;
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.ElevatorDefaultCommand;
+import frc.robot.commands.ElevatorMoveToPosition;
 import frc.robot.commands.PickAlgae;
 import frc.robot.commands.ThrowAlgae;
 import frc.robot.subsystems.Arm;
@@ -19,6 +20,7 @@ import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.PoseEstimatorSubsystem;
+import frc.robot.subsystems.Elevator.ElevatorPosition;
 
 import static frc.robot.Constants.AvailableSubsystems.*;
 import static frc.robot.Constants.GameControllerConstants.*;
@@ -48,10 +50,10 @@ public class RobotContainer {
   private void initializeElevator(CommandXboxController controller){
     if (elevatorAvailable== true){      
        elevator = new Elevator();
-
       Command elevatorC = new ElevatorDefaultCommand(elevator, controller.getHID());
       elevator.setDefaultCommand(elevatorC);
-
+      Command elevatorToPosition = new ElevatorMoveToPosition(elevator, ElevatorPosition.LowerRefPosition);
+      controller.a().onTrue(elevatorToPosition);
       // TODO: Create an ElevatorMoveToPosition command and bind it to the 'a' button on the controller.
     }
   }
