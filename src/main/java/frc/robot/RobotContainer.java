@@ -54,7 +54,7 @@ public class RobotContainer {
       elevator.setDefaultCommand(elevatorC);
       Command elevatorToPosition = new ElevatorMoveToPosition(elevator, ElevatorPosition.LowerRefPosition);
       controller.a().onTrue(elevatorToPosition);
-      // TODO: Create an ElevatorMoveToPosition command and bind it to the 'a' button on the controller.
+      // TODO: Create a ZeroElevator command and map it to the back button of the controller.
     }
   }
 
