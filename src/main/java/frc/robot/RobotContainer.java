@@ -15,6 +15,7 @@ import frc.robot.commands.ElevatorDefaultCommand;
 import frc.robot.commands.ElevatorMoveToPosition;
 import frc.robot.commands.PickAlgae;
 import frc.robot.commands.ThrowAlgae;
+import frc.robot.commands.ZeroElevator;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.DriveTrain;
@@ -54,7 +55,8 @@ public class RobotContainer {
       elevator.setDefaultCommand(elevatorC);
       Command elevatorToPosition = new ElevatorMoveToPosition(elevator, ElevatorPosition.LowerRefPosition);
       controller.a().onTrue(elevatorToPosition);
-      // TODO: Create a ZeroElevator command and map it to the back button of the controller.
+      Command zeroElevator = new ZeroElevator();
+      controller.back().onTrue(zeroElevator);
     }
   }
 
@@ -74,7 +76,6 @@ public class RobotContainer {
       Command armOut = new ArmDefaultCommand(arm, controller.getHID());
       arm.setDefaultCommand(armOut);
     }
-    // and create a ArmDefaultCommand
   }
 
   private void initializeDriveTrain(CommandXboxController controller) {

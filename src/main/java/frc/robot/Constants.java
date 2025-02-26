@@ -6,7 +6,7 @@ public class Constants {
     public static boolean elevatorAvailable = true;
     public static boolean armAvailavble = true;
     public static boolean clawAvailable = true;
-    public static boolean driveTrainAvailable = false;
+    public static boolean driveTrainAvailable = true;
     public static boolean poseEstimatorAvailable = false;
   }
 
@@ -16,7 +16,7 @@ public class Constants {
   }
 
   public static class ElevatorVals {
-    public static final int leaderCANId = 11;  // Change this CAN ID
+    public static final int leaderCANId = 15;  // Change this CAN ID
     public static final int followerCANId = 10; //
     public static final double pV = 0.0008;
     public static final double iV = 0.0;

@@ -53,29 +53,16 @@ public class Elevator extends SubsystemBase{
     }
 
     public boolean isAtLowerLimit() {
-        // TODO: From the leaderMotor, get the forward limit swtich and
-        // return isPressed()
-        // 
-        
+        leaderMotor.getForwardLimitSwitch().isPressed();
         return false;
     }
 
     public void ZeroElevator() {
-        // TODO: Get the encoder for the leaderMotor and set the value of its position to 0.
+        leaderMotor.getEncoder().setPosition(0);
     }
 
-    public boolean isAtPosition(ElevatorPosition targetPosition) {
-        //TODO: Fix this method. 
-        // It should return true if the current position is greater than targetPosition.position - marginOfError
-        // and less than targetPosition.position + marginOfError.
-        //  
-        
-        if (leaderMotor.getEncoder().getPosition() == marginOfError) {
-            return true;
-        }
-        else {
-            return false;
-        }
+    public boolean isAtPosition(ElevatorPosition targetPosition) {      
+        return marginOfError > Math.abs(leaderMotor.getEncoder().getPosition() - targetPosition.position);
     }
 
     public void moveUp(){
@@ -93,6 +80,7 @@ public class Elevator extends SubsystemBase{
     @Override
     public void periodic(){
         SmartDashboard.putNumber("Elevator Position",  leaderMotor.getEncoder().getPosition());
+        SmartDashboard.putBoolean("Is At Lower Limit", leaderMotor.getForwardLimitSwitch().isPressed());
         // TODO: Write the value of isAtLowerLimit to SmartDashboard.
     }
 }
