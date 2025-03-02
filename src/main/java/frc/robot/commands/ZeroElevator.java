@@ -1,8 +1,28 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.Elevator;
 
 public class ZeroElevator extends Command{
+    public Elevator elevator;
+
+    @Override
+    public void initialize() {
+        elevator.moveDown();
+    }
+    @Override
+    public boolean isFinished() {
+        if (elevator.isAtLowerLimit()) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    @Override
+    public void end(boolean isInteruppted) {
+        elevator.ZeroElevator();
+    }
 
     // Background:
     // The elevator uses a realitive encoder to determine the position of the elevator (how high or low it is).

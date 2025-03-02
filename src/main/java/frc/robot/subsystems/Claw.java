@@ -45,6 +45,5 @@ public class Claw extends SubsystemBase{
 
     public void stop() {
         clawMotor.stopMotor();
-        // Stop the motor
     }
 }

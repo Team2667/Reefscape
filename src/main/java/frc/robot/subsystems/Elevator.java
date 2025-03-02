@@ -18,14 +18,14 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Elevator extends SubsystemBase{
     private SparkMax followerMotor;
     private SparkMax leaderMotor;
-    private double marginOfError = 5.0;
+    private double marginOfError = 1.0;
 
     public enum ElevatorPosition {
         // TODO: We will need to determine which elevator positions we need
         // and there exact values.
-        LowerRefPosition(-5.1),
-        MiddleRefPosition(-10.3),
-        TopRefPosition(-15.6);
+        LowerRefPosition(-15),
+        MiddleRefPosition(-55),
+        TopRefPosition(-95);
 
 
         ElevatorPosition(double position){
@@ -41,6 +41,7 @@ public class Elevator extends SubsystemBase{
 
         SparkBaseConfig leaderConfig = new SparkMaxConfig();
         leaderConfig.closedLoop.pid(pV, iV, dV);
+        leaderMotor.configure(leaderConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         
 
         SparkBaseConfig followerConfig = new SparkMaxConfig();
@@ -58,7 +59,7 @@ public class Elevator extends SubsystemBase{
     }
 
     public void ZeroElevator() {
-        leaderMotor.getEncoder().setPosition(0);
+        leaderMotor.getEncoder().setPosition(0.0);
     }
 
     public boolean isAtPosition(ElevatorPosition targetPosition) {      
