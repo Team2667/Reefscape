@@ -11,8 +11,8 @@ public class Constants {
   }
 
   public static class GameControllerConstants {
-    public static int manipulatorGamepadPort = 0;
-    public static int driveTrainGamepadPort = 1;
+    public static int manipulatorGamepadPort = 1;
+    public static int driveTrainGamepadPort = 0;
   }
 
   public static class ElevatorVals {
@@ -54,25 +54,27 @@ public class Constants {
     public static final int flSteerMotorCANId = 8;
     public static final int flSteerEncoderCANId = 13;
     // public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -0.9521484375;
-    public static final double flSteerEncoderOffset = -0.45166015625;
+    public static final double flSteerEncoderOffset = -0.45166015625 + 0.5;
 
     public static final int frDriveMotorCANId = 3;
     public static final int frSteerMotorCANId = 4;
     public static final int frSteerEncoderCANId = 11;
     // public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -0.798583984375;
-    public static final double frSteerEncoderOffset = 0.35400390625;
+    public static final double frSteerEncoderOffset = 0.35400390625 + 0.5;
 
-    public static final int blDriveMotorCANId = 5;
-    public static final int blSteerMotorCANId = 6;
-    public static final int blSteerEncoderCANId = 12;
+    public static final int blDriveMotorCANId = 1;//5;
+    public static final int blSteerMotorCANId = 2;//6;
+    public static final int blSteerEncoderCANId = 14;//12;
     // public static final double BACK_LEFT_MODULE_STEER_OFFSET = -0.6484375;
-    public static final double blSteerEncoderOffset = 0.443603515625;
+    public static final double blSteerEncoderOffset = -0.203125 + 0.5;
+    
 
-    public static final int brDriveMotorCANId = 1;
-    public static final int brSteerMotorCANId = 2;
-    public static final int brSteerEncoderCANId = 14;
+    public static final int brDriveMotorCANId = 5;//1;
+    public static final int brSteerMotorCANId = 6;//2;
+    public static final int brSteerEncoderCANId = 12;//14;
     // public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -0.444580078125;
-    public static final double brSteerEncoderOffset = -0.203125;
+    public static final double brSteerEncoderOffset = 0.443603515625 + 0.5;
+    
 
     public static final double WHEEL_REVOLUTIONS_PER_METER = 3.0;
     public static final double PERCENTAGE_MAX_SPEED = 100.0;

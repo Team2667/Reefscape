@@ -54,8 +54,8 @@ public class Elevator extends SubsystemBase{
     }
 
     public boolean isAtLowerLimit() {
-        leaderMotor.getForwardLimitSwitch().isPressed();
-        return false;
+        return leaderMotor.getForwardLimitSwitch().isPressed();
+        
     }
 
     public void ZeroElevator() {

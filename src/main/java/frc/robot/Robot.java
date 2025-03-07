@@ -4,10 +4,10 @@
 
 package frc.robot;
 
+import au.grapplerobotics.CanBridge;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-//import au.grapplerobotics.CanBridge;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
@@ -16,7 +16,7 @@ public class Robot extends TimedRobot {
 
   public Robot() {
     m_robotContainer = new RobotContainer();
-    //CanBridge.runTCP();
+    CanBridge.runTCP();
   }
 
   @Override
