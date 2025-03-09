@@ -96,8 +96,8 @@ public class DriveTrain extends SubsystemBase {
     public void drive(SwerveModuleState[] states){
         m_frontLeftModule.setDesiredState(states[2]);
         m_frontRightModule.setDesiredState(states[3]);
-        m_backLeftModule.setDesiredState(states[0]);
-        m_backRightModule.setDesiredState(states[1]);
+        m_backLeftModule.setDesiredState(states[1]);
+        m_backRightModule.setDesiredState(states[0]);
     }
 
     public void moveFieldRelative(double speedMetersPerSecond, double angleInRadians) {
