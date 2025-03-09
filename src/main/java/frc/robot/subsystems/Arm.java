@@ -11,14 +11,19 @@ import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.subsystems.swerveSupport.SwerveModule;
+
 import static frc.robot.Constants.ArmVals.*;
+
+
 
 public class Arm extends SubsystemBase {
     private SparkFlex armMotor;
-
+    
     public Arm() {
+
         // create a new SparkFlex object and assign it to armMotor
-        armMotor = new SparkFlex(30, MotorType.kBrushless);
+        armMotor = new SparkFlex(canId, MotorType.kBrushless);
         SparkFlexConfig armConfig = new SparkFlexConfig();
         armConfig.closedLoop.pid(pV, iV, dV);
         armConfig.closedLoop.feedbackSensor(FeedbackSensor.kAlternateOrExternalEncoder);
