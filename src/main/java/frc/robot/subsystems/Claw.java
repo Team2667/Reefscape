@@ -12,30 +12,41 @@ import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.LimitSwitchConfig.Type;
 
+import au.grapplerobotics.LaserCan;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Claw extends SubsystemBase{
     SparkFlex clawMotor;
+    LaserCan laserCan;
     
     public Claw() {
         // Now: Initialize clawMotor
+        // TODO: Define can ID 20, in Constants.
+    
         clawMotor = new SparkFlex(20, MotorType.kBrushless);
         SparkFlexConfig clawConfig = new SparkFlexConfig();
-
-
+        // TODO: Set the closed loop PID values for the Claw motor.
+        // See examples in the Arm and/or Elevator subsystems.     
         
-        // After we know what kind of limit switches we will be us
-        // Create a local SparkMaxConfig object
-        // In the limitSwitch properties of this objec:
-        // * Enable the reverse limit switch
-        // * Set the type of limit switch to either Type.kNormallyClosed or Type.kNormallyOpen
-        //   depending on the type of limit switch we end up using.        
+        // TODO: Initialize the LaserCan. See https://github.com/GrappleRobotics/LaserCAN/blob/master/docs/example-java.md
+    }
+
+    public boolean hasGamePiece() {
+
+        // TODO: return true if the laserCan returns a distance less than some value (3 inches ?)
+        // See https://github.com/GrappleRobotics/LaserCAN/blob/master/docs/example-java.md
+        return false;
     }
 
     public void pickAlgae(){
         clawMotor.set(0.25);
         // Set the motor to move in a direction that will bring a alge into the claw
+    }
+
+    public void holdAlgae() {
+        // TODO: This method should get the current position of the motor and then set reference closed loop to
+        // hold the ball.
     }
 
     public void throwAlgae() {
@@ -46,4 +57,6 @@ public class Claw extends SubsystemBase{
     public void stop() {
         clawMotor.stopMotor();
     }
+
+    
 }

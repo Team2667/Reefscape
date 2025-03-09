@@ -22,13 +22,20 @@ public class Arm extends SubsystemBase {
         SparkFlexConfig armConfig = new SparkFlexConfig();
         armConfig.closedLoop.pid(pV, iV, dV);
         armConfig.closedLoop.feedbackSensor(FeedbackSensor.kAlternateOrExternalEncoder);
-        
+        armMotor.configure(armConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    }
 
-        
-        // In the closedLoop there is a feedbackSendor property. 
-        // This needs to be set to a FeedbackSensor.kAlternatOrExternalEncoder enum value. 
-        // Set the PID values. See elevator for an example-done
-        // 
+    public enum ArmPosition {
+
+        // TODO: Determine what positions are for getting Algae from the low and high parts of the reef, for scoring,
+        // and for picking up from the ground. Add those positions here.
+        LowReef(20.0);
+
+        ArmPosition(double position){
+            this.position = position;
+        }
+
+        public double position;
     }
 
     public void rotateClockwise(){
@@ -37,6 +44,11 @@ public class Arm extends SubsystemBase {
 
     public void rotateCounterClockwise(){
         armMotor.set(-0.25);
+    }
+
+    public void rotateToPosition(ArmPosition armPos) {
+        // TODO: implement the method for rotating the arm to the specified position.
+        // See example in the elevator subsystem.
     }
     
     public void stopMotor() {

@@ -17,6 +17,12 @@ public class PickAlgae extends Command {
         claw.pickAlgae();
     }
 
+    // TODO: Implement this command by calling a method on the claw subsystem.
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
+
     @Override
     public void end(boolean isFinished) {
         claw.stop();

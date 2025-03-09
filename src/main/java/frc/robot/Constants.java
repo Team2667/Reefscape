@@ -26,9 +26,10 @@ public class Constants {
   public static class ArmVals {
     public static int canId = 30;
 
-    public static final double pV = 0.0008;
+    public static final double pV = 0.01;
     public static final double iV = 0.0;
     public static final double dV = 0;
+    public static final double ff = 0;
   }
 
   public static class ClawVals {
