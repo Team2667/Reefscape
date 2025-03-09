@@ -45,10 +45,12 @@ public class Claw extends SubsystemBase{
         clawConfig.closedLoop.pid(pV, iV, dV);
         clawConfig.closedLoop.feedbackSensor(FeedbackSensor.kAlternateOrExternalEncoder);
         clawMotor.configure(clawConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        
         // ✓ TODO: Set the closed loop PID values for the Claw motor.
         // See examples in the Arm and/or Elevator subsystems.     
         
         // TODO: Initialize the LaserCan. See https://github.com/GrappleRobotics/LaserCAN/blob/master/docs/example-java.md
+        laserCan = new LaserCan(laserCanId);
     }
 
     public boolean hasGamePiece() {
@@ -82,7 +84,8 @@ public class Claw extends SubsystemBase{
     @Override
     public void periodic(){
         LaserCan.Measurement measurement = laserCan.getMeasurement();
-        SmartDashboard.putNumber("LaserCAN measurment", measurement.distance_mm);
+        
+        SmartDashboard.putNumber("LaserCAN measurment", measurement != null ? measurement.distance_mm : -99);
     }    
     
 }
