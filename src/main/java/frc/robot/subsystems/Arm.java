@@ -1,17 +1,17 @@
 package frc.robot.subsystems;
 
+import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkFlexConfig;
-import com.revrobotics.spark.config.ClosedLoopConfig;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 
+import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.subsystems.swerveSupport.SwerveModule;
 
 import static frc.robot.Constants.ArmVals.*;
 
@@ -19,6 +19,8 @@ import static frc.robot.Constants.ArmVals.*;
 
 public class Arm extends SubsystemBase {
     private SparkFlex armMotor;
+    private ArmFeedforward ff;
+    private static double fullCircleRadians = Math.PI * 2;
     
     public Arm() {
 
@@ -28,13 +30,12 @@ public class Arm extends SubsystemBase {
         armConfig.closedLoop.pid(pV, iV, dV);
         armConfig.closedLoop.feedbackSensor(FeedbackSensor.kAlternateOrExternalEncoder);
         armMotor.configure(armConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        ff = new ArmFeedforward(ffs, ffg, ffv);
     }
 
     public enum ArmPosition {
 
-        // TODO: Determine what positions are for getting Algae from the low and high parts of the reef, for scoring,
-        // and for picking up from the ground. Add those positions here.
-        LowReef(20.0);
+        LowReef(.2);
 
         ArmPosition(double position){
             this.position = position;
@@ -52,23 +53,24 @@ public class Arm extends SubsystemBase {
     }
 
     public void rotateToPosition(ArmPosition armPos) {
-        // TODO: implement the method for rotating the arm to the specified position.
-        // See example in the elevator subsystem.
+        var posInRadians = toArmPositionInRadians(armMotor.getAbsoluteEncoder().getPosition());
+        armMotor.getEncoder().getVelocity();
+        var currentVelocityInRadians = armMotor.getEncoder().getVelocity() * fullCircleRadians;
+        var ffInVolts = ff.calculateWithVelocities(posInRadians, currentVelocityInRadians, 0.0);
+
+        armMotor.getClosedLoopController().setReference(armPos.position, ControlType.kPosition, ClosedLoopSlot.kSlot0, ffInVolts);
     }
     
     public void stopMotor() {
         armMotor.stopMotor();
     }
 
-    public void toProcessorPosition(){
-
-        armMotor.getClosedLoopController();
-        // On the armMotor, there is something called a closed loop controller. Get that and then 
-        // call set reference.
-    }
-
     @Override
     public void periodic(){
         SmartDashboard.putNumber("Arm Position", armMotor.getEncoder().getPosition());
-    }    
+    }
+    
+    private double toArmPositionInRadians(double sensorValue) {
+        return Math.abs(sensorValue - armOffset) * fullCircleRadians;
+    }
 }

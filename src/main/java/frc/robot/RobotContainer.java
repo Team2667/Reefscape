@@ -73,6 +73,7 @@ public class RobotContainer {
 
   private void initializeArm(CommandXboxController controller) {
     if (armAvailavble == true) {
+      // TODO: create a command to move the arm to a specific position and bind it to the A button.
       arm = new Arm();
       Command armOut = new ArmDefaultCommand(arm, controller.getHID());
       arm.setDefaultCommand(armOut);
