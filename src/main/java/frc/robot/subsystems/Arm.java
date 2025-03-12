@@ -10,6 +10,7 @@ import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 
 import edu.wpi.first.math.controller.ArmFeedforward;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -30,7 +31,9 @@ public class Arm extends SubsystemBase {
         armConfig.closedLoop.pid(pV, iV, dV);
         armConfig.closedLoop.feedbackSensor(FeedbackSensor.kAlternateOrExternalEncoder);
         armMotor.configure(armConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-        ff = new ArmFeedforward(ffs, ffg, ffv);
+        ff = new ArmFeedforward(
+            kSVolts, kGVolts,
+            kVVoltSecondPerRad, kAVoltSecondSquaredPerRad);
     }
 
     public enum ArmPosition {
@@ -52,25 +55,27 @@ public class Arm extends SubsystemBase {
         armMotor.set(-0.25);
     }
 
-    public void rotateToPosition(ArmPosition armPos) {
-        var posInRadians = toArmPositionInRadians(armMotor.getAbsoluteEncoder().getPosition());
-        armMotor.getEncoder().getVelocity();
-        var currentVelocityInRadians = armMotor.getEncoder().getVelocity() * fullCircleRadians;
-        var ffInVolts = ff.calculateWithVelocities(posInRadians, currentVelocityInRadians, 0.0);
-
-        armMotor.getClosedLoopController().setReference(armPos.position, ControlType.kPosition, ClosedLoopSlot.kSlot0, ffInVolts);
+    public void runToPosition(TrapezoidProfile.State setpoint) {
+        double feedforward = ff.calculate(setpoint.position*2*Math.PI, setpoint.velocity);
+        armMotor.getClosedLoopController().setReference(setpoint.position, ControlType.kPosition, 
+        ClosedLoopSlot.kSlot0, feedforward);
     }
     
     public void stopMotor() {
         armMotor.stopMotor();
     }
 
+    public boolean isAtSetPoint(ArmPosition setPoint){
+        return Math.abs(setPoint.position - getArmPosition()) < armMarginOfError;
+        
+    }
+
+    private double getArmPosition(){
+        return armMotor.getEncoder().getPosition();
+    }
+
     @Override
     public void periodic(){
         SmartDashboard.putNumber("Arm Position", armMotor.getEncoder().getPosition());
-    }
-    
-    private double toArmPositionInRadians(double sensorValue) {
-        return Math.abs(sensorValue - armOffset) * fullCircleRadians;
     }
 }

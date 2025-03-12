@@ -28,16 +28,17 @@ public class Constants {
 
     //TODO: Figure out the armOffset. This should be through bore encoder sensor reading when the arm is parallel to the floor.
     public static double armOffset = 0.0;
+    public static double armMarginOfError = 0.002;
 
     public static final double pV = 0.01;
     public static final double iV = 0.0;
     public static final double dV = 0;
     public static final double ff = 0;
 
-    public static final double ffv = 0.0;
-    public static final double ffs = 0.0;
-    public static final double ffg = 0.0;
-    public static final double ffa = 0.0;
+    public static final double kSVolts = 0;
+    public static final double kGVolts = 0.33;
+    public static final double kVVoltSecondPerRad = 6.24;
+    public static final double kAVoltSecondSquaredPerRad = 0.04;
   }
 
   public static class ClawVals {
