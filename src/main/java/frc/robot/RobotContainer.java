@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.ArmDefaultCommand;
 import frc.robot.commands.ArmMoveToPosition;
+import frc.robot.commands.ArmResetConfig;
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.ElevatorDefaultCommand;
 import frc.robot.commands.ElevatorMoveToPosition;
@@ -80,6 +81,8 @@ public class RobotContainer {
       arm.setDefaultCommand(armOut);
       Command armToHeight = new ArmMoveToPosition(arm, Arm.ArmPosition.LowReef);
       controller.y().onTrue(armToHeight); //(armToHeight);
+
+      controller.leftStick().onTrue(new ArmResetConfig(arm));
 
     }
   }
