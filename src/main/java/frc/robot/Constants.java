@@ -26,17 +26,31 @@ public class Constants {
   public static class ArmVals {
     public static int canId = 30;
 
-    public static final double pV = 0.01;
+    //TODO: Figure out the armOffset. This should be through bore encoder sensor reading when the arm is parallel to the floor.
+    public static double armOffset = 0.0;
+    public static double armMarginOfError = 0.002;
+
+    public static final double pV = 1.5;
     public static final double iV = 0.0;
     public static final double dV = 0;
     public static final double ff = 0;
+
+
+    public static final double kG = .34;
+    public static final double kV = 1.69;
+    public static final double kA = .01;
+
+    public static final double kSVolts = 0;
+    public static final double kGVolts = 0.34;
+    public static final double kVVoltSecondPerRad = 6.24;
+    public static final double kAVoltSecondSquaredPerRad = 0.04;
   }
 
   public static class ClawVals {
     public static int canId = 20;
     public static int laserCanId = 21;
     public static double pullInSpeed = .25;
-    public static double throwSpeed = .25;
+    public static double throwSpeed = -1;
   }
 
   public static class DriveTrainVals {

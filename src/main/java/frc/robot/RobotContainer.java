@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.ArmDefaultCommand;
+import frc.robot.commands.ArmMoveToPosition;
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.ElevatorDefaultCommand;
 import frc.robot.commands.ElevatorMoveToPosition;
@@ -65,7 +66,7 @@ public class RobotContainer {
     if (clawAvailable == true){
       claw = new Claw();
       Command clawIntake = new PickAlgae(claw);
-      controller.leftBumper().whileTrue(clawIntake);
+      controller.leftBumper().onTrue(clawIntake);
       Command clawThrow = new ThrowAlgae(claw);
       controller.rightBumper().whileTrue(clawThrow);
       }
@@ -73,9 +74,13 @@ public class RobotContainer {
 
   private void initializeArm(CommandXboxController controller) {
     if (armAvailavble == true) {
+      // TODO: create a command to move the arm to a specific position and bind it to the A button.
       arm = new Arm();
       Command armOut = new ArmDefaultCommand(arm, controller.getHID());
       arm.setDefaultCommand(armOut);
+      Command armToHeight = new ArmMoveToPosition(arm, Arm.ArmPosition.LowReef);
+      controller.y().onTrue(armToHeight); //(armToHeight);
+
     }
   }
 
