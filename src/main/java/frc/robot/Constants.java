@@ -21,7 +21,7 @@ public class Constants {
     public static final double pV = 0.01;
     public static final double iV = 0.00005;
     public static final double dV = 0;
-    public static final double upperLimit = -95;
+    public static final double upperLimit = -99;
   }
 
   public static class ArmVals {
@@ -84,7 +84,6 @@ public class Constants {
     public static final int blSteerEncoderCANId = 14;//12;
     // public static final double BACK_LEFT_MODULE_STEER_OFFSET = -0.6484375;
     public static final double blSteerEncoderOffset = -0.203125 + 0.5;
-    
 
     public static final int brDriveMotorCANId = 5;//1;
     public static final int brSteerMotorCANId = 6;//2;
@@ -92,7 +91,6 @@ public class Constants {
     // public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -0.444580078125;
     public static final double brSteerEncoderOffset = 0.443603515625 + 0.5;
     
-
     public static final double WHEEL_REVOLUTIONS_PER_METER = 3.0;
     public static final double PERCENTAGE_MAX_SPEED = 100.0;
   }

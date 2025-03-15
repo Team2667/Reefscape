@@ -49,6 +49,7 @@ public class RobotContainer {
     initializeClaw(manipulatorController);
     initializeArm(manipulatorController);
     initializePoseEstimator(driveTrain);
+    initializeManipulatorCompoundCommands(manipulatorController);
   }
 
   private void initializeElevator(CommandXboxController controller){
@@ -56,8 +57,7 @@ public class RobotContainer {
        elevator = new Elevator();
       Command elevatorC = new ElevatorDefaultCommand(elevator, controller.getHID());
       elevator.setDefaultCommand(elevatorC);
-      Command elevatorToPosition = new ElevatorMoveToPosition(elevator, ElevatorPosition.LowerRefPosition);
-      controller.a().onTrue(elevatorToPosition);
+     
       Command zeroElevator = new ZeroElevator(elevator);
       controller.back().onTrue(zeroElevator);
     }
@@ -80,10 +80,7 @@ public class RobotContainer {
       arm = new Arm();
       Command armOut = new ArmDefaultCommand(arm, controller.getHID());
       arm.setDefaultCommand(armOut);
-      Command armToHeight = new ArmMoveToPosition(arm, Arm.ArmPosition.LowReef);
-      controller.b().onTrue(armToHeight); //(armToHeight);
-      controller.y().onTrue(new ArmMoveToPosition(arm, ArmPosition.Home));
-      controller.x().onTrue(new ArmMoveToPosition(arm, ArmPosition.Score));
+      
 
       controller.leftStick().onTrue(new ArmResetConfig(arm));
 
@@ -104,6 +101,31 @@ public class RobotContainer {
     if (poseEstimatorAvailable && driveTrainAvailable) {
        var photonCamera = new PhotonCamera("USB_webcam");
       poseEstimator = new PoseEstimatorSubsystem(photonCamera, driveTrain);
+    }
+  }
+
+  private void initializeManipulatorCompoundCommands(CommandXboxController controller) {
+    if (driveTrainAvailable && armAvailavble) {
+      ElevatorMoveToPosition CMD1 = new ElevatorMoveToPosition(elevator, ElevatorPosition.LowerRefPosition);
+      ArmMoveToPosition CMD2 = new ArmMoveToPosition(arm, ArmPosition.LowReef);
+      controller.x().onTrue(CMD1.andThen(CMD2));
+      
+      ElevatorMoveToPosition CMD3 = new ElevatorMoveToPosition(elevator, ElevatorPosition.HomePosition);
+      ArmMoveToPosition CMD4 = new ArmMoveToPosition(arm, ArmPosition.Home);
+      controller.leftStick().onTrue(CMD4.andThen(CMD3));
+      
+      ElevatorMoveToPosition CMD5 = new ElevatorMoveToPosition(elevator, ElevatorPosition.TopRefPosition);
+      ArmMoveToPosition CMD6 = new ArmMoveToPosition(arm, ArmPosition.HighReef);
+      controller.y().onTrue(CMD5.andThen(CMD6));
+
+      ElevatorMoveToPosition CMD7 = new ElevatorMoveToPosition(elevator, ElevatorPosition.offGroundPos);
+      ArmMoveToPosition CMD8 = new ArmMoveToPosition(arm, ArmPosition.offGround);
+      controller.rightStick().onTrue(CMD7.andThen(CMD8));
+
+      ElevatorMoveToPosition CMD9 = new ElevatorMoveToPosition(elevator, ElevatorPosition.offCoralPos);
+      ArmMoveToPosition CMD10 = new ArmMoveToPosition(arm, ArmPosition.OffCoral);
+      controller.a().onTrue(CMD9.andThen(CMD10));
+
     }
   }
 

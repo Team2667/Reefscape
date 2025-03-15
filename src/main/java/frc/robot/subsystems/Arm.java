@@ -60,8 +60,6 @@ public class Arm extends SubsystemBase {
         armConfig.closedLoop.outputRange(-0.7, .7);
         armConfig.absoluteEncoder.inverted(true);
         armConfig.closedLoop.feedbackSensor(FeedbackSensor.kAbsoluteEncoder);
-        armConfig.softLimit.forwardSoftLimit(80.0);
-        armConfig.softLimit.reverseSoftLimit(25.0);
         armMotor.configure(armConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         printOutVals();
     }
@@ -69,8 +67,12 @@ public class Arm extends SubsystemBase {
     public enum ArmPosition {
 
         LowReef(0.5),
+        HighReef(0.408), //formerly 0.47
         Home(.25),
-        Score(.2);
+        Score(.2),
+        offGround(0.53),
+        OffCoral(0.43);
+        
 
         ArmPosition(double position){
             this.position = position;

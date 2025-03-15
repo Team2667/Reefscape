@@ -23,10 +23,13 @@ public class Elevator extends SubsystemBase{
     public enum ElevatorPosition {
         // TODO: We will need to determine which elevator positions we need
         // and there exact values.
-        LowerRefPosition(-15),
+        LowerRefPosition(-66),
         MiddleRefPosition(-55),
-        TopRefPosition(-95);
-
+        TopRefPosition(-69), //formerly 96
+        HomePosition(-5),
+        offGroundPos(-16.5),
+        offCoralPos(-5);
+        
 
         ElevatorPosition(double position){
             this.position = position;
