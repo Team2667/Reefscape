@@ -68,7 +68,9 @@ public class Arm extends SubsystemBase {
 
     public enum ArmPosition {
 
-        LowReef(0.5);
+        LowReef(0.5),
+        Home(.25),
+        Score(.2);
 
         ArmPosition(double position){
             this.position = position;
@@ -100,7 +102,7 @@ public class Arm extends SubsystemBase {
         
     }
 
-    private double getArmPosition(){
+    public double getArmPosition(){
         return armMotor.getEncoder().getPosition();
     }
 

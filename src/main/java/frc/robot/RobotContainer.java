@@ -23,6 +23,7 @@ import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.PoseEstimatorSubsystem;
+import frc.robot.subsystems.Arm.ArmPosition;
 import frc.robot.subsystems.Elevator.ElevatorPosition;
 
 import static frc.robot.Constants.AvailableSubsystems.*;
@@ -80,7 +81,9 @@ public class RobotContainer {
       Command armOut = new ArmDefaultCommand(arm, controller.getHID());
       arm.setDefaultCommand(armOut);
       Command armToHeight = new ArmMoveToPosition(arm, Arm.ArmPosition.LowReef);
-      controller.y().onTrue(armToHeight); //(armToHeight);
+      controller.b().onTrue(armToHeight); //(armToHeight);
+      controller.y().onTrue(new ArmMoveToPosition(arm, ArmPosition.Home));
+      controller.x().onTrue(new ArmMoveToPosition(arm, ArmPosition.Score));
 
       controller.leftStick().onTrue(new ArmResetConfig(arm));
 

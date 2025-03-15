@@ -41,7 +41,8 @@ public class Elevator extends SubsystemBase{
 
         SparkBaseConfig leaderConfig = new SparkMaxConfig();
         leaderConfig.closedLoop.pid(pV, iV, dV);
-        leaderConfig.softLimit.reverseSoftLimit(-50);
+        leaderConfig.softLimit.reverseSoftLimit(upperLimit);
+        leaderConfig.softLimit.reverseSoftLimitEnabled(true);
         leaderMotor.configure(leaderConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         
 
