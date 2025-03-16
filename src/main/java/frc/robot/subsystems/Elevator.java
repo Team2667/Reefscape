@@ -55,12 +55,25 @@ public class Elevator extends SubsystemBase{
     }
 
     public void moveToPosition(ElevatorPosition targetPosition) {
-        leaderMotor.getClosedLoopController().setReference(targetPosition.position, ControlType.kPosition);
+        moveToPosition(targetPosition.position);
+    }
+
+    public void moveToPosition(double position) {
+        leaderMotor.getClosedLoopController().setReference(position, ControlType.kPosition);
+    }
+
+    public double getPosition() {
+        return leaderMotor.getEncoder().getPosition();
     }
 
     public boolean isAtLowerLimit() {
         return leaderMotor.getForwardLimitSwitch().isPressed();
-        
+    }
+
+    //TODO: PL01 - make this method return true if the current position of the elevator is less than or equal to upperLimit.
+    // Note: recall the position of our elecator decreases as the elevator moves up.
+    public boolean isAtUpperLimit() {
+        return false;
     }
 
     public void ZeroElevator() {
@@ -71,10 +84,12 @@ public class Elevator extends SubsystemBase{
         return marginOfError > Math.abs(leaderMotor.getEncoder().getPosition() - targetPosition.position);
     }
 
+    //TODO: PL01 - Remove this method
     public void moveUp(){
         leaderMotor.set(-0.15);
     }
 
+    //TODO: PL01 - remove this method
     public void moveDown(){
         leaderMotor.set(0.15);
     }

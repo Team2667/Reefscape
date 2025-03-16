@@ -60,6 +60,14 @@ public class Arm extends SubsystemBase {
         armConfig.closedLoop.outputRange(-0.7, .7);
         armConfig.absoluteEncoder.inverted(true);
         armConfig.closedLoop.feedbackSensor(FeedbackSensor.kAbsoluteEncoder);
+
+        //TODO: PL02: armConfig has a softLimit property. This property allows you to set the value
+        // for the forward and reverse limit switches. It also allows you to enable the limit switches.
+        // * Set the forwardSoftLimit to forward limit.
+        // * Set the reverseSoftLimit to reverseLimit.
+        // * Enable both limit switches.
+        // See elevator constructor for an example.
+        
         armMotor.configure(armConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         printOutVals();
     }
@@ -106,6 +114,16 @@ public class Arm extends SubsystemBase {
 
     public double getArmPosition(){
         return armMotor.getEncoder().getPosition();
+    }
+
+    // TODO PL02: Return true if the arm position is greater than or equal to forwardLimit
+    public boolean isAtForwardLimit() {
+        return false;
+    }
+
+    // TODO PL02: Return true if the arm position is less than or equal to reverseLimit
+    public boolean isAtReverseLimimt() {
+        return false;
     }
 
     @Override

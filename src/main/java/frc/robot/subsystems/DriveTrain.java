@@ -21,7 +21,9 @@ import frc.robot.subsystems.swerveSupport.SwerveModuleConfiguration;
 import static frc.robot.Constants.DriveTrainVals.*;
 
 public class DriveTrain extends SubsystemBase {
-    Pigeon2 pigeon = new Pigeon2(pigeonId); //CHANGE ME ASAP
+    Pigeon2 pigeon = new Pigeon2(pigeonId);
+
+    //TODO: PL06: Add a way to reduce drive train speed by half
 
     private final SwerveModule m_frontLeftModule;
     private final SwerveModule m_frontRightModule;
@@ -31,6 +33,8 @@ public class DriveTrain extends SubsystemBase {
     public static final double MAX_VELOCITY_METERS_PER_SECOND = 6380.0 / 60.0 *
                             (14.0 / 50.0) * (25.0 / 19.0) * (15.0 / 45.0) * 0.10033 * Math.PI;
     private double headingOffset = 0;
+
+    private double driveSpeedMultiple = 1.0;
 
     public static final double MAX_VOLTAGE = 12.0;
 
@@ -82,10 +86,18 @@ public class DriveTrain extends SubsystemBase {
         m_backRightModule = new SwerveModule(SwerveModuleConfiguration.backRightConfig());
     }
 
+    public void throttleDriveSpeed(){
+        driveSpeedMultiple = .5;
+    }
+
+    public void removeDriveSpeedThrottle() {
+        driveSpeedMultiple = 1.0;
+    }
+
     public void drive (ChassisSpeeds chassisSpeeds){
         m_chassisSpeeds = chassisSpeeds;
         SwerveModuleState[] states = m_kinematics.toSwerveModuleStates(m_chassisSpeeds);
-        SwerveDriveKinematics.desaturateWheelSpeeds(states, MAX_VELOCITY_METERS_PER_SECOND);
+        SwerveDriveKinematics.desaturateWheelSpeeds(states, MAX_VELOCITY_METERS_PER_SECOND * driveSpeedMultiple);
 
         m_frontLeftModule.setDesiredState(states[2]);
         m_frontRightModule.setDesiredState(states[3]);
