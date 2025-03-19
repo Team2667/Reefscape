@@ -32,6 +32,8 @@ public class ArmDefaultCommand extends Command{
         // Set the state member variable to the next state counter clockwise.
 
         // call arm.runToPosition
+
+        if (controller.getPOV() == 90)
         arm.runToPosition(state);
     }
 

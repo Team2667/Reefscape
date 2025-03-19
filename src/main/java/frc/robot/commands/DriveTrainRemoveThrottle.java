@@ -3,10 +3,10 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.DriveTrain;
 
-public class DriveTrainRemoceThrottle extends Command{
+public class DriveTrainRemoveThrottle extends Command{
     private DriveTrain driveTrain;
     
-    public DriveTrainRemoceThrottle(DriveTrain driveTrain) {
+    public DriveTrainRemoveThrottle(DriveTrain driveTrain) {
         this.driveTrain = driveTrain;
         this.addRequirements(driveTrain);
     }

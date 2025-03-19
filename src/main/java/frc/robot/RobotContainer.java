@@ -14,7 +14,7 @@ import frc.robot.commands.ArmMoveToPosition;
 import frc.robot.commands.ArmResetConfig;
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.DriveTrainAddThrottle;
-import frc.robot.commands.DriveTrainRemoceThrottle;
+import frc.robot.commands.DriveTrainRemoveThrottle;
 import frc.robot.commands.ElevatorDefaultCommand;
 import frc.robot.commands.ElevatorMoveToPosition;
 import frc.robot.commands.PickAlgae;
@@ -98,7 +98,7 @@ public class RobotContainer {
           () -> modifyAxis(controller.getHID().getRightX())));
 
       controller.rightTrigger(.5).onTrue(new DriveTrainAddThrottle(driveTrain));
-      controller.rightTrigger(.5).onFalse(new DriveTrainRemoceThrottle(driveTrain));
+      controller.rightTrigger(.5).onFalse(new DriveTrainRemoveThrottle(driveTrain));
     }
   }
 
