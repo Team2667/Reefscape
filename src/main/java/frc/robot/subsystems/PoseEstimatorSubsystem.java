@@ -20,10 +20,10 @@ import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.proto.Wpimath;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import static frc.robot.Constants.PoseEstimatorVals.*;
 
 public class PoseEstimatorSubsystem extends SubsystemBase {
-    private final PhotonCamera photonCamera;
+    private  PhotonCamera photonCamera;
     private final DriveTrain driveTrain;
     private final SwerveDrivePoseEstimator poseEstimator;
     private double previousTimeStampSeconds = 0;
@@ -31,11 +31,13 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     private final Transform3d cameraToRobot;
 
     public PoseEstimatorSubsystem(PhotonCamera photonCamera, DriveTrain driveTrain) {
-        this.photonCamera = photonCamera;
+        if (usePhotonVision) {
+            this.photonCamera = new PhotonCamera("USB_webcam");
+        }
         this.driveTrain = driveTrain;
         this.poseEstimator = new SwerveDrivePoseEstimator(driveTrain.getKinematics(), driveTrain.getGyroscopeRotation(), 
                                 driveTrain.getSwerveModulePositions(), new Pose2d());
-        aprilTagFieldLayout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField();
+        aprilTagFieldLayout = AprilTagFields.k2025ReefscapeWelded.loadAprilTagLayoutField();
         cameraToRobot = new Transform3d(0.0,-0.09525,-1,new Rotation3d()); //fill in Z later
     }
 
@@ -81,49 +83,27 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     private void updatePoseEstimator(){
         poseEstimator.update(driveTrain.getGyroscopeRotation(), driveTrain.getSwerveModulePositions());
         var pipelineResult = photonCamera.getLatestResult();
-        var resultTimeStamp = pipelineResult.getTimestampSeconds();        
-        if (resultTimeStamp != previousTimeStampSeconds && pipelineResult.hasTargets()){
-            SmartDashboard.putNumber("vision timestamp", resultTimeStamp);
-            previousTimeStampSeconds = resultTimeStamp;
-            var target = pipelineResult.getBestTarget();
-            SmartDashboard.putNumber("vision ambiguity", target.getPoseAmbiguity());
+        if (usePhotonVision) {
+            var resultTimeStamp = pipelineResult.getTimestampSeconds();        
+            if (resultTimeStamp != previousTimeStampSeconds && pipelineResult.hasTargets()){
 
-            if (target.getPoseAmbiguity() <= .2){
-                aprilTagFieldLayout.getTagPose(target.getFiducialId()).ifPresent(
-                    targetPos -> {
-                        Transform3d camToTarget = target.getBestCameraToTarget();
-                        if(writeDebugVals){
-                            SmartDashboard.putNumber("cam-to-target-transform-x", camToTarget.getX());
-                            SmartDashboard.putNumber("cam-to-target-transform-y", camToTarget.getY());
-                            SmartDashboard.putNumber("cam-to-target-transform-z", camToTarget.getZ());
-                        }
-                        Pose3d camPose = targetPos.transformBy(camToTarget.inverse());
-                        if(writeDebugVals){
-                            SmartDashboard.putNumber("camPose-x", camPose.getX());
-                            SmartDashboard.putNumber("camPose-y", camPose.getY());
-                            SmartDashboard.putNumber("camPose-z", camPose.getZ());
-                            SmartDashboard.putNumber("camPose-rotation", camPose.getRotation().getAngle());
-                        }
+                previousTimeStampSeconds = resultTimeStamp;
+                var target = pipelineResult.getBestTarget();    
+                if (target.getPoseAmbiguity() <= .2){
+                    aprilTagFieldLayout.getTagPose(target.getFiducialId()).ifPresent(
+                        targetPos -> {
+                            Transform3d camToTarget = target.getBestCameraToTarget();
+                            Pose3d camPose = targetPos.transformBy(camToTarget.inverse());
 
-                        //FIGGER OUT HOW TO GET THE 3D ROTATION
-                        var visionMeasurement = camPose.transformBy(cameraToRobot);
-                        var visionPos = visionMeasurement.toPose2d();
-                        if(writeDebugVals) {
-                            SmartDashboard.putNumber("Vision X", visionPos.getX());
-                            SmartDashboard.putNumber("Vision Y", visionPos.getY());
-                            SmartDashboard.putNumber("Vision rotation", visionPos.getRotation().getDegrees());
-                            SmartDashboard.putNumber("Vision timestamp", resultTimeStamp);
-                        }
-                       
-                        var rotation = Rotation2d.fromDegrees((visionPos.getRotation().getDegrees() + 180) % 360);
-                        poseEstimator.addVisionMeasurement(new Pose2d(visionPos.getX(), visionPos.getY(), rotation), 
-                                    previousTimeStampSeconds);
-                        //poseEstimator.addVisionMeasurement(new Pose2d(visionPos.getX(), 8.218-visionPos.getY(), rotation), 
-                        //                        previousTimeStampSeconds);
-                        //poseEstimator.addVisionMeasurement(new Pose2d(visionPos.getX(),visionPos.getY(),visionPos.getRotation()), previousTimeStampSeconds);
-                       //poseEstimator.resetPosition(driveTrain.getGyroscopeRotation(), driveTrain.getSwerveModulePositions(), getPosition());
-                    });
+                            var visionMeasurement = camPose.transformBy(cameraToRobot);
+                            var visionPos = visionMeasurement.toPose2d();
+                           
+                            var rotation = Rotation2d.fromDegrees((visionPos.getRotation().getDegrees() + 180) % 360);
+                            poseEstimator.addVisionMeasurement(new Pose2d(visionPos.getX(), visionPos.getY(), rotation), 
+                                        previousTimeStampSeconds);
+                         });
+                }
             }
         }
-    }   
+    } 
 }

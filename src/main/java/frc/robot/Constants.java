@@ -53,8 +53,9 @@ public class Constants {
   public static class ClawVals {
     public static int canId = 20;
     public static int laserCanId = 21;
-    public static double pullInSpeed = .25;
+    public static double pullInSpeed = .75;
     public static double throwSpeed = -1;
+    public static double maxCurrent = 60.0;
   }
 
   public static class DriveTrainVals {
@@ -99,7 +100,8 @@ public class Constants {
   }
 
   public static class PoseEstimatorVals {
-    public static boolean writeDebugVals = false;
+    public static boolean writeDebugVals = true;
+    public static boolean usePhotonVision = false;
   }
 
 }

@@ -18,7 +18,7 @@ public class PickAlgae extends Command {
 
     @Override
     public boolean isFinished() {
-        return false;
+        return claw.isAlgaePicked();
     }
 
     @Override
