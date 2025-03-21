@@ -41,11 +41,6 @@ public class Constants {
     public static final double kV = 1.69;
     public static final double kA = .01;
 
-    public static final double kSVolts = 0;
-    public static final double kGVolts = 0.34;
-    public static final double kVVoltSecondPerRad = 6.24;
-    public static final double kAVoltSecondSquaredPerRad = 0.04;
-
     public static final double reverseLimit = .1;
     public static final double forwardLimit = .55;
   }

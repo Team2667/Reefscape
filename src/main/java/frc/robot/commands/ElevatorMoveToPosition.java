@@ -26,6 +26,5 @@ public class ElevatorMoveToPosition extends Command{
 
     @Override
     public void end(boolean isInteruppted) {
-        elevator.stop();
     }
 }

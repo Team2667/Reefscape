@@ -20,20 +20,16 @@ public class ArmDefaultCommand extends Command{
 
     @Override
     public void initialize() {
-        // TODO: PL03 initalize armPosition to the arms current position.
+        state = new TrapezoidProfile.State(arm.getArmPosition(), 0.0);
     }
 
     @Override
     public void execute() {
-        // TODO: PLO3 if controller POV is 90 and arm is not at the forward limit
-        // Set the state member variable to to the next state clockwise.
-
-        // if controller POV is 270 and arm is not at the reverse limit,
-        // Set the state member variable to the next state counter clockwise.
-
-        // call arm.runToPosition
-
-        if (controller.getPOV() == 90)
+        if (controller.getPOV() == 90 ){
+            state = getNextStateClockwise();
+        } else if (controller.getPOV() == 270) {
+            state = getNextCopunterStateClockwise();
+        }
         arm.runToPosition(state);
     }
 

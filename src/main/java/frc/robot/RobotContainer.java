@@ -5,13 +5,17 @@
 package frc.robot;
 
 import edu.wpi.first.math.estimator.PoseEstimator;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.ArmDefaultCommand;
 import frc.robot.commands.ArmMoveToPosition;
-import frc.robot.commands.ArmResetConfig;
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.DriveTrainAddThrottle;
 import frc.robot.commands.DriveTrainRemoveThrottle;
@@ -31,6 +35,8 @@ import frc.robot.subsystems.Elevator.ElevatorPosition;
 import static frc.robot.Constants.AvailableSubsystems.*;
 import static frc.robot.Constants.GameControllerConstants.*;
 
+import java.util.ArrayList;
+
 import org.photonvision.PhotonCamera;
 
 public class RobotContainer {
@@ -41,6 +47,8 @@ public class RobotContainer {
   private PoseEstimatorSubsystem poseEstimator;
   private CommandXboxController driveTrainController;
   private CommandXboxController manipulatorController;
+  private TrajectoryCommandFactory trajectoryCommandFactory;
+  private SendableChooser<Command> sendableChooser;
   
   public RobotContainer() {
     // Initialize manipulatorController using manipulator gamepad Port constant
@@ -52,6 +60,7 @@ public class RobotContainer {
     initializeArm(manipulatorController);
     initializePoseEstimator(driveTrain);
     initializeManipulatorCompoundCommands(manipulatorController);
+    initializeAutonomousCommands();
   }
 
   private void initializeElevator(CommandXboxController controller){
@@ -82,9 +91,6 @@ public class RobotContainer {
       arm = new Arm();
       Command armOut = new ArmDefaultCommand(arm, controller.getHID());
       arm.setDefaultCommand(armOut);
-      
-
-      controller.leftStick().onTrue(new ArmResetConfig(arm));
 
     }
   }
@@ -138,8 +144,23 @@ public class RobotContainer {
     }
   }
 
+  private void initializeAutonomousCommands() {
+    if (poseEstimatorAvailable && driveTrainAvailable) {
+      Transform2d transformStart = new Transform2d(3, 3, new Rotation2d(0));
+      trajectoryCommandFactory = new TrajectoryCommandFactory(driveTrain, poseEstimator);
+      Pose2d startingPos = poseEstimator.getPosition();
+      Pose2d endingPos = startingPos.transformBy(transformStart);
+      Command moveCommand = trajectoryCommandFactory.createTrajectoryCommand(startingPos, new ArrayList<Translation2d>(), endingPos);
+      sendableChooser.addOption("Move to Position", moveCommand);
+    }
+  }
+
   public Command getAutonomousCommand() {
-    return Commands.print("No autonomous command configured");
+    if (sendableChooser != null) {
+      return sendableChooser.getSelected();
+    } else {
+      return Commands.print("No autonomous command configured");
+    }
   }
 
   private double modifyAxis(double input) {
