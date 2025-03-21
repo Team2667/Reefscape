@@ -23,7 +23,13 @@ public class ElevatorDefaultCommand  extends Command{
 
     @Override
     public void execute() {
-
+            if (controller.getPOV() == 0){
+                elevator.moveUp();
+            } else if (controller.getPOV() == 180) {
+                elevator.moveDown();
+            } else {
+                elevator.stop();
+            }
         // TODO: PL01 - implement this method as follows:
         // if controller.getPOV() == 0 and elevator is not at the upper limit, substract 1.0 from elevatorPOS.
         // if controller.getPOV() == 180 and elevator is not at the lower limit, add 1.0 to elevatorPOS;

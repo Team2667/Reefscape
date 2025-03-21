@@ -113,7 +113,7 @@ public class Arm extends SubsystemBase {
     }
 
     public double getArmPosition(){
-        return armMotor.getEncoder().getPosition();
+        return armMotor.getAbsoluteEncoder().getPosition();
     }
 
     // TODO PL02: Return true if the arm position is greater than or equal to forwardLimit

@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import static frc.robot.Constants.AvailableSubsystems.clawAvailable;
 import static frc.robot.Constants.ClawVals.*;
 
 
@@ -14,17 +15,22 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Claw extends SubsystemBase{
     SparkFlex clawMotor;
+    SparkFlexConfig clawConfig;
 
          
     public Claw() {
         clawMotor = new SparkFlex(canId, MotorType.kBrushless);
         SparkFlexConfig clawConfig = new SparkFlexConfig();
-        clawConfig.smartCurrentLimit(40);
+        clawConfig.smartCurrentLimit(50);
         clawMotor.configure(clawConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
     public void pickAlgae(){
-        clawMotor.set(pullInSpeed);
+        if (clawMotor.getEncoder().getVelocity() < 5) {
+            clawMotor.set(pullInSpeed);
+        } else {
+            clawMotor.stopMotor();
+        }
     }
 
     public void throwAlgae() {

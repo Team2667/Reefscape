@@ -19,6 +19,7 @@ public class Elevator extends SubsystemBase{
     private SparkMax followerMotor;
     private SparkMax leaderMotor;
     private double marginOfError = 1.0;
+    private boolean usingPid;
 
     public enum ElevatorPosition {
         // TODO: We will need to determine which elevator positions we need
@@ -52,6 +53,7 @@ public class Elevator extends SubsystemBase{
         SparkBaseConfig followerConfig = new SparkMaxConfig();
         followerConfig.follow(leaderCANId, true);
         followerMotor.configure(followerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        usingPid = false;
     }
 
     public void moveToPosition(ElevatorPosition targetPosition) {
@@ -59,6 +61,7 @@ public class Elevator extends SubsystemBase{
     }
 
     public void moveToPosition(double position) {
+        usingPid = true;
         leaderMotor.getClosedLoopController().setReference(position, ControlType.kPosition);
     }
 
@@ -86,11 +89,19 @@ public class Elevator extends SubsystemBase{
 
     //TODO: PL01 - Remove this method
     public void moveUp(){
+        if (usingPid) {
+            stop();
+            usingPid = false;
+        }
         leaderMotor.set(-0.15);
     }
 
     //TODO: PL01 - remove this method
     public void moveDown(){
+        if (usingPid) {
+            stop();
+            usingPid = false;
+        }
         leaderMotor.set(0.15);
     }
 

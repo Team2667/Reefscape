@@ -37,9 +37,9 @@ public class Constants {
     public static final double ff = 0;
 
 
-    public static final double kG = .34;
+    public static final double kG = 1.53; //original claw.34;
     public static final double kV = 1.69;
-    public static final double kA = .01;
+    public static final double kA = .07; // original claw .01
 
     public static final double kSVolts = 0;
     public static final double kGVolts = 0.34;

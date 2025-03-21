@@ -16,6 +16,7 @@ public class ElevatorMoveToPosition extends Command{
 
     @Override
     public void initialize() {
+        System.out.println("Elevator Move to Position started");
         elevator.moveToPosition(targetPosition);
     }
 
@@ -26,6 +27,7 @@ public class ElevatorMoveToPosition extends Command{
 
     @Override
     public void end(boolean isInteruppted) {
+        System.out.println("Elevator Move to Position Ended");
         elevator.stop();
     }
 }
