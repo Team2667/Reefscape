@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.SparkBase;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.ControlType;
@@ -43,7 +44,9 @@ public class Elevator extends SubsystemBase{
         followerMotor = new SparkMax(followerCANId, MotorType.kBrushless);
 
         SparkBaseConfig leaderConfig = new SparkMaxConfig();
+        leaderConfig.smartCurrentLimit(40);
         leaderConfig.closedLoop.pid(pV, iV, dV);
+        leaderConfig.closedLoop.iMaxAccum(.1);
         leaderConfig.softLimit.reverseSoftLimit(upperLimit);
         leaderConfig.softLimit.reverseSoftLimitEnabled(true);
         leaderMotor.configure(leaderConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -51,6 +54,7 @@ public class Elevator extends SubsystemBase{
 
         SparkBaseConfig followerConfig = new SparkMaxConfig();
         followerConfig.follow(leaderCANId, true);
+        followerConfig.smartCurrentLimit(40);
         followerMotor.configure(followerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
@@ -62,8 +66,16 @@ public class Elevator extends SubsystemBase{
         leaderMotor.getClosedLoopController().setReference(position, ControlType.kPosition);
     }
 
+    public void moveToPosition(double position, double ffValue) {
+        leaderMotor.getClosedLoopController().setReference(position, ControlType.kPosition, ClosedLoopSlot.kSlot0, ffValue);
+    }
+
     public double getPosition() {
         return leaderMotor.getEncoder().getPosition();
+    }
+
+    public double getVelocity() {
+        return leaderMotor.getEncoder().getVelocity();
     }
 
     public boolean isAtLowerLimit() {
@@ -84,11 +96,11 @@ public class Elevator extends SubsystemBase{
     }
    
     public void moveUp(){
-        leaderMotor.set(-0.15);
+        leaderMotor.set(-0.25);
     }
 
     public void moveDown(){
-        leaderMotor.set(0.15);
+        leaderMotor.set(0.25);
     }
 
     public void stop(){

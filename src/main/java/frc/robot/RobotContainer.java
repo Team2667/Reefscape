@@ -19,6 +19,7 @@ import frc.robot.commands.ArmMoveToPosition;
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.DriveTrainAddThrottle;
 import frc.robot.commands.DriveTrainRemoveThrottle;
+import frc.robot.commands.DriveTrainZeroIMU;
 import frc.robot.commands.ElevatorDefaultCommand;
 import frc.robot.commands.ElevatorMoveToPosition;
 import frc.robot.commands.PickAlgae;
@@ -65,10 +66,7 @@ public class RobotContainer {
 
   private void initializeElevator(CommandXboxController controller){
     if (elevatorAvailable== true){      
-       elevator = new Elevator();
-      Command elevatorC = new ElevatorDefaultCommand(elevator, controller.getHID());
-      elevator.setDefaultCommand(elevatorC);
-     
+       elevator = new Elevator();     
       Command zeroElevator = new ZeroElevator(elevator);
       controller.back().onTrue(zeroElevator);
     }
@@ -90,7 +88,7 @@ public class RobotContainer {
       // TODO: create a command to move the arm to a specific position and bind it to the A button.
       arm = new Arm();
       Command armOut = new ArmDefaultCommand(arm, controller.getHID());
-      arm.setDefaultCommand(armOut);
+    //  arm.setDefaultCommand(armOut);
 
     }
   }
@@ -105,6 +103,7 @@ public class RobotContainer {
 
       controller.rightTrigger(.5).onTrue(new DriveTrainAddThrottle(driveTrain));
       controller.rightTrigger(.5).onFalse(new DriveTrainRemoveThrottle(driveTrain));
+      controller.leftStick().onTrue(new DriveTrainZeroIMU(driveTrain));
     }
   }
 
@@ -136,6 +135,8 @@ public class RobotContainer {
       ElevatorMoveToPosition CMD9 = new ElevatorMoveToPosition(elevator, ElevatorPosition.offCoralPos);
       ArmMoveToPosition CMD10 = new ArmMoveToPosition(arm, ArmPosition.OffCoral);
       controller.a().onTrue(CMD9.andThen(CMD10));
+
+      controller.b().whileTrue(new ElevatorDefaultCommand(elevator, controller.getHID()));
 
       //TODO: PL04 - Add a command for positioning the robot to put the algae in the barge
 

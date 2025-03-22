@@ -19,18 +19,13 @@ public class ArmDefaultCommand extends Command{
     }
 
     @Override
-    public void initialize() {
-        state = new TrapezoidProfile.State(arm.getArmPosition(), 0.0);
-    }
-
-    @Override
     public void execute() {
         if (controller.getPOV() == 90 ){
-            state = getNextStateClockwise();
+            arm.rotateClockwise();
         } else if (controller.getPOV() == 270) {
-            state = getNextCopunterStateClockwise();
+            arm.rotateCounterClockwise();
         }
-        arm.runToPosition(state);
+        arm.stopMotor();
     }
 
     private TrapezoidProfile.State getNextStateClockwise() {

@@ -22,14 +22,18 @@ public class ElevatorDefaultCommand extends Command {
 
     @Override
     public void execute() {
-        if (controller.getPOV() == 0 && !elevator.isAtUpperLimit()) {
-            elevatorPos -= 1.0;
-        } else if (controller.getPOV() == 180 && !elevator.isAtLowerLimit()) {
-            elevatorPos += 1.0;
+        if (controller.getPOV() == 0 ) {
+           elevator.moveUp();
+        } else if (controller.getPOV() == 180 ) {
+            elevator.moveDown();
+        } else {
+            elevator.stop();
         }
+    }
 
-        elevator.moveToPosition(elevatorPos);
-
+    @Override
+    public void end(boolean isInteruppted) {
+        elevator.stop();
     }
 
 }

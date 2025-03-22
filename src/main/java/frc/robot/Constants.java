@@ -18,10 +18,10 @@ public class Constants {
   public static class ElevatorVals {
     public static final int leaderCANId = 15;  // Change this CAN ID
     public static final int followerCANId = 10; //
-    public static final double pV = 0.01;
-    public static final double iV = 0.00005;
+    public static final double pV = 0.1;
+    public static final double iV = 0.0;
     public static final double dV = 0;
-    public static final double upperLimit = -99;
+    public static final double upperLimit = -115;
   }
 
   public static class ArmVals {

@@ -86,7 +86,7 @@ public class Arm extends SubsystemBase {
     }
 
     public double getArmPosition(){
-        return armMotor.getEncoder().getPosition();
+        return armMotor.getAbsoluteEncoder().getPosition();
     }
 
     public boolean isAtForwardLimit() {
