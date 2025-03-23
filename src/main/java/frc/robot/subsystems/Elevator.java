@@ -22,14 +22,14 @@ public class Elevator extends SubsystemBase{
     private double marginOfError = 1.0;
 
     public enum ElevatorPosition {
-        // TODO: We will need to determine which elevator positions we need
-        // and there exact values.
+        // More negative number = higher
         LowerRefPosition(-66),
         MiddleRefPosition(-55),
         TopRefPosition(-69), //formerly 96
         HomePosition(-5),
         offGroundPos(-16.5),
-        offCoralPos(-5);
+        offCoralPos(-5),
+        toBargePos(-114);
         
 
         ElevatorPosition(double position){

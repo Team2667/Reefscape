@@ -14,20 +14,26 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Claw extends SubsystemBase{
     SparkFlex clawMotor;
+    SparkFlexConfig throwConfig;
+    SparkFlexConfig pickConfig;
 
          
     public Claw() {
         clawMotor = new SparkFlex(canId, MotorType.kBrushless);
-        SparkFlexConfig clawConfig = new SparkFlexConfig();
-        clawConfig.smartCurrentLimit(40);
-        clawMotor.configure(clawConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        throwConfig = new SparkFlexConfig();
+        throwConfig.smartCurrentLimit(80);
+        pickConfig = new SparkFlexConfig();
+        pickConfig.smartCurrentLimit(50);
+        clawMotor.configure(pickConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
     public void pickAlgae(){
+        clawMotor.configure(pickConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         clawMotor.set(pullInSpeed);
     }
 
     public void throwAlgae() {
+        clawMotor.configure(throwConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         clawMotor.set(throwSpeed);
     }
 

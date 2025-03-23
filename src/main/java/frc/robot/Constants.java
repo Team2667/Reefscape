@@ -50,7 +50,7 @@ public class Constants {
     public static int laserCanId = 21;
     public static double pullInSpeed = .75;
     public static double throwSpeed = -1;
-    public static double maxCurrent = 60.0;
+    public static double maxCurrent = 65.0;
   }
 
   public static class DriveTrainVals {
