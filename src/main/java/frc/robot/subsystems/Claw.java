@@ -31,6 +31,12 @@ public class Claw extends SubsystemBase{
         clawMotor.set(throwSpeed);
     }
 
+    // TODO: implement this method. It should run the motor in the same direction needed to pick up an Algae.
+    // The speed may be different.
+    public void dropCoral() {
+
+    }
+
     public boolean isAlgaePicked() {
         return clawMotor.getOutputCurrent() > maxCurrent;
     }
