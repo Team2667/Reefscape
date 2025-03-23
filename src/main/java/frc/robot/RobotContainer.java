@@ -117,7 +117,7 @@ public class RobotContainer {
       poseEstimator = new PoseEstimatorSubsystem(photonCamera, driveTrain);
     }
   }
-
+  // change the "CMD#" to more descriptive names
   private void initializeManipulatorCompoundCommands(CommandXboxController controller) {
     if (driveTrainAvailable && armAvailavble) {
       ElevatorMoveToPosition CMD1 = new ElevatorMoveToPosition(elevator, ElevatorPosition.LowerRefPosition);
@@ -140,7 +140,11 @@ public class RobotContainer {
       ArmMoveToPosition CMD10 = new ArmMoveToPosition(arm, ArmPosition.OffCoral);
       controller.a().onTrue(CMD9.andThen(CMD10));
 
-      controller.b().whileTrue(new ElevatorDefaultCommand(elevator, controller.getHID()));
+      controller.start().whileTrue(new ElevatorDefaultCommand(elevator, controller.getHID()));
+
+      ElevatorMoveToPosition ElevatorToBarge = new ElevatorMoveToPosition(elevator, ElevatorPosition.toBargePos);
+      ArmMoveToPosition ArmToBarge = new ArmMoveToPosition(arm, ArmPosition.ToBarge);
+      controller.b().onTrue(ElevatorToBarge.andThen(ArmToBarge));
 
       //TODO: PL04 - Add a command for positioning the robot to put the algae in the barge
 

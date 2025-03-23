@@ -48,12 +48,15 @@ public class Arm extends SubsystemBase {
     }
 
     public enum ArmPosition {
+        // higher number = more towards the front of the robot
+        // straight up is 0.25
         LowReef(0.5),
         HighReef(0.408), //formerly 0.47
         Home(.25),
         Score(.2),
         offGround(0.53),
-        OffCoral(0.43);
+        OffCoral(0.45),
+        ToBarge(0.28);
 
         ArmPosition(double position){
             this.position = position;
