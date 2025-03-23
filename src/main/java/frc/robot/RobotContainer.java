@@ -9,6 +9,9 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.units.DistanceUnit;
+import edu.wpi.first.units.Units;
+import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -35,6 +38,7 @@ import frc.robot.subsystems.Elevator.ElevatorPosition;
 
 import static frc.robot.Constants.AvailableSubsystems.*;
 import static frc.robot.Constants.GameControllerConstants.*;
+import static frc.robot.Constants.PoseEstimatorVals.usePhotonVision;
 
 import java.util.ArrayList;
 
@@ -151,13 +155,37 @@ public class RobotContainer {
 
   private void initializeAutonomousCommands() {
     if (poseEstimatorAvailable && driveTrainAvailable) {
-      Transform2d transformStart = new Transform2d(3, 3, new Rotation2d(0));
-      trajectoryCommandFactory = new TrajectoryCommandFactory(driveTrain, poseEstimator);
-      Pose2d startingPos = poseEstimator.getPosition();
-      Pose2d endingPos = startingPos.transformBy(transformStart);
-      Command moveCommand = trajectoryCommandFactory.createTrajectoryCommand(startingPos, new ArrayList<Translation2d>(), endingPos);
-      sendableChooser.addOption("Move to Position", moveCommand);
+      sendableChooser.addOption("Score from middle No April Tags", createScoreFromMiddleAutonomousNoAprilTags());
+      if (usePhotonVision) {
+        sendableChooser.addOption("Blue Score from middle April Tags", createBlueScoreFromMiddleAutonomous());
+      }
     }
+  }
+
+  private Command createScoreFromMiddleAutonomousNoAprilTags() {
+    Transform2d transformStart = new Transform2d(2.2, 0.0, new Rotation2d(0));
+    trajectoryCommandFactory = new TrajectoryCommandFactory(driveTrain, poseEstimator);
+    Pose2d startingPos = poseEstimator.getPosition();
+    Pose2d endingPos = startingPos.transformBy(transformStart);
+    Command moveCommand = trajectoryCommandFactory.createTrajectoryCommand(startingPos, new ArrayList<Translation2d>(), endingPos);
+    return moveCommand;
+  }
+
+  private Command createBlueScoreFromMiddleAutonomous() {
+    trajectoryCommandFactory = new TrajectoryCommandFactory(driveTrain, poseEstimator);
+    Pose2d startingPos = poseEstimator.getPosition();
+    Pose2d endingPos = new Pose2d(5.2, 4.0259, Rotation2d.k180deg);
+    Command moveCommand = trajectoryCommandFactory.createTrajectoryCommand(startingPos, new ArrayList<Translation2d>(), endingPos);
+    return moveCommand;
+  }
+
+  private Command createBlueScoreFromLeft() {
+    Transform2d transformStart = new Transform2d(2.2, 0.0, new Rotation2d(0));
+    trajectoryCommandFactory = new TrajectoryCommandFactory(driveTrain, poseEstimator);
+    Pose2d startingPos = poseEstimator.getPosition();
+    Pose2d endingPos = startingPos.transformBy(transformStart);
+    Command moveCommand = trajectoryCommandFactory.createTrajectoryCommand(startingPos, new ArrayList<Translation2d>(), endingPos);
+    return moveCommand;
   }
 
   public Command getAutonomousCommand() {
