@@ -1,17 +1,27 @@
 package frc.robot.commands;
 
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
+
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.subsystems.Claw;
 
 
 public class DepositCoral extends Command{
 
-    private Claw claw;
-
-    // TODO: Create a constructor that initializes claw, and adds claw as a requirement for this command.
+    private Claw claw; 
     
-    // TODO: Create an execute method that calls the drop coral method on claw.
-
-    // TODO: Create an end method that stops the motor.
-
+    public void initializeClaw(Claw claw) {
+        this.claw = claw;
+        this.addRequirements(claw);
+        
+    }
+    public void initialize() {
+        claw.dropCoral();
+    }
+    
+    public void stop() {
+        claw.stop();
+    }
 }

@@ -32,13 +32,13 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
 
     public PoseEstimatorSubsystem(PhotonCamera photonCamera, DriveTrain driveTrain) {
         if (usePhotonVision) {
-            this.photonCamera = new PhotonCamera("USB_webcam");
+            this.photonCamera = new PhotonCamera("PC_Camera");
         }
         this.driveTrain = driveTrain;
         this.poseEstimator = new SwerveDrivePoseEstimator(driveTrain.getKinematics(), driveTrain.getGyroscopeRotation(), 
                                 driveTrain.getSwerveModulePositions(), new Pose2d());
         aprilTagFieldLayout = AprilTagFields.k2025ReefscapeWelded.loadAprilTagLayoutField();
-        cameraToRobot = new Transform3d(0.0,-0.09525,-1,new Rotation3d()); //fill in Z later
+        cameraToRobot = new Transform3d(0.76,0.0,.3,new Rotation3d(0,0,0)); //fill in Z later
     }
 
     public Pose2d getPosition() {
