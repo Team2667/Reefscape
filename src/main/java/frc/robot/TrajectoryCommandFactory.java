@@ -22,7 +22,7 @@ public class TrajectoryCommandFactory {
 
     DriveTrain driveTrain;
     PoseEstimatorSubsystem poseEstimator;
-    private  PIDController xController = new PIDController(0.5, 0.00000001, 0);
+    private  PIDController xController = new PIDController(0.5, 0, 0);
     private  PIDController yController = new PIDController(0.5, 0, 0);
     private  ProfiledPIDController omegaController = new ProfiledPIDController(0.010, 0, 0, OMEGA_CONSTRAINTS);
 

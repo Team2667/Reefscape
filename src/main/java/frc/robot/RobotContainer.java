@@ -19,6 +19,8 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.ArmDefaultCommand;
 import frc.robot.commands.ArmMoveToPosition;
+import frc.robot.commands.ClimberForward;
+import frc.robot.commands.ClimberReverse;
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.DriveTrainAddThrottle;
 import frc.robot.commands.DriveTrainRemoveThrottle;
@@ -30,6 +32,7 @@ import frc.robot.commands.ThrowAlgae;
 import frc.robot.commands.ZeroElevator;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.PoseEstimatorSubsystem;
@@ -40,6 +43,7 @@ import static frc.robot.Constants.AvailableSubsystems.*;
 import static frc.robot.Constants.GameControllerConstants.*;
 import static frc.robot.Constants.PoseEstimatorVals.usePhotonVision;
 
+import java.lang.ModuleLayer.Controller;
 import java.util.ArrayList;
 
 import org.photonvision.PhotonCamera;
@@ -49,6 +53,7 @@ public class RobotContainer {
   private Claw claw;
   private Arm arm;
   private DriveTrain driveTrain;
+  private Climber climber;
   private PoseEstimatorSubsystem poseEstimator;
   private CommandXboxController driveTrainController;
   private CommandXboxController manipulatorController;
@@ -59,6 +64,7 @@ public class RobotContainer {
     // Initialize manipulatorController using manipulator gamepad Port constant
     manipulatorController = new CommandXboxController(manipulatorGamepadPort);
     driveTrainController = new CommandXboxController(driveTrainGamepadPort);
+    sendableChooser = new SendableChooser<>();
     initializeDriveTrain(driveTrainController);
     initializeElevator(manipulatorController);
     initializeClaw(manipulatorController);
@@ -66,6 +72,7 @@ public class RobotContainer {
     initializePoseEstimator(driveTrain);
     initializeManipulatorCompoundCommands(manipulatorController);
     initializeAutonomousCommands();
+    initializeClimber(driveTrainController);
   }
 
   private void initializeElevator(CommandXboxController controller){
@@ -150,6 +157,17 @@ public class RobotContainer {
 
       //TODO: PL05 - Use alongWith instead of andThen to combine the commands. This should cause the
       // compound commands to run syncronously instead of in series.
+    }
+  }
+
+  private void initializeClimber(CommandXboxController controller) {
+    if (climberAvailable) {
+      climber = new Climber();
+      ClimberForward climberForward = new ClimberForward(climber);
+      controller.rightTrigger().onTrue(climberForward);
+
+      ClimberReverse climberReverse = new ClimberReverse(climber);
+      controller.leftTrigger().onTrue(climberReverse);
     }
   }
 

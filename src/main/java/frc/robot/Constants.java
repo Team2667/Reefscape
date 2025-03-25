@@ -7,7 +7,8 @@ public class Constants {
     public static boolean armAvailavble = true;
     public static boolean clawAvailable = true;
     public static boolean driveTrainAvailable = true;
-    public static boolean poseEstimatorAvailable = false;
+    public static boolean poseEstimatorAvailable = true;
+    public static boolean climberAvailable = false;
   }
 
   public static class GameControllerConstants {
@@ -48,6 +49,7 @@ public class Constants {
   public static class ClawVals {
     public static int canId = 20;
     public static int laserCanId = 21;
+    public static double CoralOut = 0.4;
     public static double pullInSpeed = .75;
     public static double throwSpeed = -1;
     public static double maxCurrent = 65.0;
@@ -96,7 +98,13 @@ public class Constants {
 
   public static class PoseEstimatorVals {
     public static boolean writeDebugVals = true;
-    public static boolean usePhotonVision = false;
+    public static boolean usePhotonVision = true;
+  }
+
+  public static class ClimberVals {
+    public static int canId = 41;
+    public static double forwardSpeed = .5;
+    public static double reverseSpeed = -.5;
   }
 
 }
