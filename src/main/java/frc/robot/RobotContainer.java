@@ -71,8 +71,9 @@ public class RobotContainer {
     initializeArm(manipulatorController);
     initializePoseEstimator(driveTrain);
     initializeManipulatorCompoundCommands(manipulatorController);
-    initializeAutonomousCommands();
     initializeClimber(driveTrainController);
+    initializeAutonomousCommands();
+
   }
 
   private void initializeElevator(CommandXboxController controller){
@@ -164,10 +165,10 @@ public class RobotContainer {
     if (climberAvailable) {
       climber = new Climber();
       ClimberForward climberForward = new ClimberForward(climber);
-      controller.rightTrigger().onTrue(climberForward);
+      controller.rightBumper().whileTrue(climberForward);
 
       ClimberReverse climberReverse = new ClimberReverse(climber);
-      controller.leftTrigger().onTrue(climberReverse);
+      controller.leftBumper().whileTrue(climberReverse);
     }
   }
 
