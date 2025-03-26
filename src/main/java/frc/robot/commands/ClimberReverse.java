@@ -12,10 +12,14 @@ public class ClimberReverse extends Command{
         this.addRequirements(climber);
     } 
 
-    public void intiialize() {
+    
+    @Override
+    public void initialize() {
         climber.reverse();
     } 
-    public void end(Boolean isFinished) {
+
+    @Override
+    public void end(boolean isFinished) {
         climber.stop();
     }
 }

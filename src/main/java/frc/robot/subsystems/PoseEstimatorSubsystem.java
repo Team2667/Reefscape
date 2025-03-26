@@ -82,8 +82,8 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
 
     private void updatePoseEstimator(){
         poseEstimator.update(driveTrain.getGyroscopeRotation(), driveTrain.getSwerveModulePositions());
-        var pipelineResult = photonCamera.getLatestResult();
         if (usePhotonVision) {
+            var pipelineResult = photonCamera.getLatestResult();
             var resultTimeStamp = pipelineResult.getTimestampSeconds();        
             if (resultTimeStamp != previousTimeStampSeconds && pipelineResult.hasTargets()){
 

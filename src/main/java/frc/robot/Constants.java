@@ -8,7 +8,7 @@ public class Constants {
     public static boolean clawAvailable = true;
     public static boolean driveTrainAvailable = true;
     public static boolean poseEstimatorAvailable = true;
-    public static boolean climberAvailable = false;
+    public static boolean climberAvailable = true;
   }
 
   public static class GameControllerConstants {
@@ -98,7 +98,7 @@ public class Constants {
 
   public static class PoseEstimatorVals {
     public static boolean writeDebugVals = true;
-    public static boolean usePhotonVision = true;
+    public static boolean usePhotonVision = false;
   }
 
   public static class ClimberVals {
